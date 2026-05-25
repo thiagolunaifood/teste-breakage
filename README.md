@@ -29,6 +29,18 @@ URL pra colocar no banner do backoffice:
 rawRoute?path=/webView?withAppBar=false&url=https://<projeto>.vercel.app/breakage
 ```
 
+URL pra usar em push notification ou in-app message do Braze (setting "Deeplink into application"):
+
+```
+ifoodbenefits://inapp/webView?withAppBar=false&url=https://<projeto>.vercel.app/breakage
+```
+
+Observações sobre o deeplink:
+- O prefixo `/inapp/` é obrigatório — sem ele o app cai na home
+- `withAppBar=false` deixa a LP usar a tela inteira (sem barra nativa em cima)
+- Mesmo formato funciona pra push e in-app
+- Pra segmentar a origem no Amplitude, adicione `?source=push` ou `?source=inapp` no fim da `url` interna (vai parar em `event_properties.referrer` / podemos parsear como source)
+
 ---
 
 ## Fluxo do experimento
