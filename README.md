@@ -143,6 +143,6 @@ Pushes futuros pra `main` disparam deploy automático.
 - **Stack:** HTML standalone vanilla — sem build, peso mínimo, TTI rápido na WebView
 - **Hero:** Reward Card SVG (do Figma) preservado como está, sem adaptar pro hero padrão do playbook
 - **Cores:** gradiente `#8f0340 → #69022d` e primário `#a41d50` do protótipo (não foi puxado pro `#A91046` do playbook)
-- **Ícones info cards:** emojis (🎁 💳 ⏱️) — sem dependência de URL externa
+- **Ícones info cards:** SVGs inline (círculo magenta `#B5004C` + glifo branco) — sem dependência de URL externa, design vindo do Figma
 - **CTA:** só primário ("Quero meu presente") + navegação simples pra `/ativado`. Sem CTA secundário, sem pesquisa positiva/negativa.
 - **Seções:** mantém só o que existia no protótipo (3 info cards + 3 FAQ). Sem social proof, bullets de valor, depoimentos, disclaimer.
