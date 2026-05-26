@@ -3,7 +3,7 @@
   "trailingSlash": false,
   "rewrites": [
     { "source": "/breakage", "destination": "/breakage.html" },
-    { "source": "/ativado",  "destination": "/ativado.html"  }
+    { "source": "/sucesso",  "destination": "/sucesso.html"  }
   ],
   "headers": [
     {

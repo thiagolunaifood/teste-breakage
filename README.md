@@ -11,8 +11,10 @@ Construídas seguindo o playbook em `../playbook_contrucao_lps_app.md`. Hospedag
 ```
 incentivos-experiments/
 ├── breakage.html        # LP principal — apresenta a oferta (R$ 35, 4 dias)
-├── ativado.html         # Página pós-CTA — confirma liberação + atalhos
+├── sucesso.html         # Página pós-CTA — confirma liberação + 3 atalhos
 ├── reward-card.svg      # Hero do breakage (Figma export)
+├── icon-check.svg       # Check verde da página de sucesso
+├── success-icon-*.svg   # Ícones dos cards da página de sucesso
 ├── fonts/               # Tipo iFood Titulos + Textos (WOFF2)
 ├── vercel.json          # cleanUrls + rewrites + X-Frame-Options ALLOWALL
 └── README.md
@@ -21,7 +23,7 @@ incentivos-experiments/
 URLs públicas após deploy:
 
 - `https://<projeto>.vercel.app/breakage`
-- `https://<projeto>.vercel.app/ativado`
+- `https://<projeto>.vercel.app/sucesso`
 
 URL pra colocar no banner do backoffice:
 
@@ -47,9 +49,10 @@ Observações sobre o deeplink:
 
 1. Usuário toca o banner na home do app
 2. WebView abre `/breakage` → apresenta o presente de R$ 35 com prazo de 4 dias
-3. Usuário toca **Quero meu presente** → tracking `lp_cta_click` + navega pra `/ativado`
-4. `/ativado` confirma a liberação e oferece 3 atalhos: saldo, mercado com desconto, hits
-5. Cada atalho dispara um deeplink configurado em `DEEPLINKS` (ativado.html). Hoje os targets estão vazios — preencher quando soubermos os URIs reais.
+3. Usuário toca **Quero meu presente** → tracking `lp_cta_click` + navega pra `/sucesso`
+4. `/sucesso` confirma a liberação (check verde grande) e oferece 3 atalhos: mercado com desconto, hits, ver extrato
+5. Cada atalho dispara um deeplink configurado em `DEEPLINKS` (sucesso.html). Hoje os targets de `hits` e `extrato` estão vazios — preencher quando soubermos os URIs reais. `mercado` já está configurado.
+6. Link **Usar presente depois** volta pra home do iFood Benefícios (canal `RedirectToRoute` com fallback `OnClose`).
 
 ---
 
@@ -75,9 +78,9 @@ A API key fica vazia em produção até alguém preencher `AMPLITUDE_API_KEY` no
 | breakage     | `lp_page_view`            | `available_channels`                    |
 | breakage     | `lp_faq_open`             | `question`                              |
 | breakage     | `lp_cta_click`            | `cta_type=positive`, `cta_label`        |
-| ativado      | `ativado_page_view`       | —                                       |
-| ativado      | `ativado_option_click`    | `option`, `channel`, `target`, `dispatched` |
-| ativado      | `ativado_close_click`     | —                                       |
+| sucesso      | `sucesso_page_view`       | —                                       |
+| sucesso      | `sucesso_option_click`    | `option` (mercado/hits/extrato), `channel`, `target`, `dispatched` |
+| sucesso      | `sucesso_later_click`     | — (link "Usar presente depois")         |
 
 Todos carregam: `variant=breakage`, `session_uuid`, `person_id` (se houver), `person_id_source`, `platform`, `page_url`, `referrer`.
 
@@ -128,8 +131,9 @@ Pushes futuros pra `main` disparam deploy automático.
 
 ## Checklist pré-go-live
 
-- [ ] `AMPLITUDE_API_KEY` preenchida em `breakage.html` e `ativado.html`
-- [ ] Targets em `DEEPLINKS` (ativado.html) preenchidos com os URIs reais (saldo, mercado, hits)
+- [ ] `AMPLITUDE_API_KEY` preenchida em `breakage.html` e `sucesso.html`
+- [ ] Targets em `DEEPLINKS` (sucesso.html) preenchidos com os URIs reais (`hits`, `extrato`). `mercado` já está configurado.
+- [ ] `HOME_ROUTE.target` em `sucesso.html` confirmado com mobile (rota nomeada da home do iFood Benefícios)
 - [ ] Debug modal não atrapalha (acessar sem `?debug=1` confirma que está escondido)
 - [ ] Testado no app Android (`?debug=1` pra ver canais Flutter)
 - [ ] Testado no app iOS (`?debug=1`)

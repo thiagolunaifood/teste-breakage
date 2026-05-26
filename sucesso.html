@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffffff" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <title>iFood Benefícios — Presente liberado</title>
+  <meta name="description" content="Seu presente de R$ 35 foi liberado. Escolha onde usar no iFood." />
+
+  <style>
+    /* ==================== TIPOGRAFIA TIPO IFOOD ==================== */
+    @font-face { font-family: 'TipoiFood Titulos'; src: url('/fonts/TipoiFoodTitulos-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+    @font-face { font-family: 'TipoiFood Titulos'; src: url('/fonts/TipoiFoodTitulos-ExtraBold.woff2') format('woff2'); font-weight: 800; font-display: swap; }
+    @font-face { font-family: 'TipoiFood Textos'; src: url('/fonts/TipoiFoodTextos-Regular.woff2') format('woff2'); font-weight: 400; font-display: swap; }
+    @font-face { font-family: 'TipoiFood Textos'; src: url('/fonts/TipoiFoodTextos-Medium.woff2') format('woff2'); font-weight: 500; font-display: swap; }
+    @font-face { font-family: 'TipoiFood Textos'; src: url('/fonts/TipoiFoodTextos-Bold.woff2') format('woff2'); font-weight: 700; font-display: swap; }
+
+    :root {
+      --success-green:  #007a3f;
+      --primary-color:  #c1144d;
+      --text-light:     #141414;
+      --text-secondary: #666666;
+      --border-light:   #ebebeb;
+      --border-hover:   #d4d4d4;
+      --bg-white:       #ffffff;
+
+      --font-family-body:    'TipoiFood Textos', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-family-display: 'TipoiFood Titulos', -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html, body { height: 100%; width: 100%; }
+
+    html { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+
+    body {
+      font-family: var(--font-family-body);
+      background-color: var(--bg-white);
+      color: var(--text-light);
+      line-height: 1.5;
+      overflow-x: hidden;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 480px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      background-color: var(--bg-white);
+      padding-top: env(safe-area-inset-top);
+      padding-bottom: env(safe-area-inset-bottom);
+    }
+
+    @media (min-width: 481px) {
+      body { background-color: #EFEFEF; }
+      .container { box-shadow: 0 0 24px rgba(0,0,0,0.08); }
+    }
+
+    /* Decoração radial verde suave atrás do conteúdo */
+    .background-decoration {
+      position: absolute;
+      width: 491px;
+      height: 445px;
+      left: 50%;
+      top: 30%;
+      transform: translate(-50%, -50%);
+      z-index: 1;
+      opacity: 0.4;
+      background: radial-gradient(circle at center, rgba(0, 122, 63, 0.25), rgba(0, 122, 63, 0) 70%);
+      border-radius: 50%;
+      filter: blur(40px);
+      pointer-events: none;
+    }
+
+    /* ============ CONTEÚDO PRINCIPAL ============ */
+    .content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      justify-content: center;
+      padding: 32px 16px 16px;
+      position: relative;
+      z-index: 2;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .check-circle {
+      width: 152px;
+      height: 152px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      filter: drop-shadow(0 8px 24px rgba(0, 122, 63, 0.15));
+    }
+
+    .check-circle img {
+      width: 152px;
+      height: 152px;
+      display: block;
+    }
+
+    .page-header {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-items: center;
+      width: 100%;
+      text-align: center;
+    }
+
+    .header-title {
+      font-family: var(--font-family-body);
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 24px;
+      color: var(--success-green);
+    }
+
+    .header-description {
+      font-family: var(--font-family-body);
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      color: var(--text-secondary);
+      max-width: 320px;
+    }
+
+    /* ============ CARDS DE OPÇÕES ============ */
+    .button-container {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      padding: 16px;
+      width: 100%;
+      position: relative;
+      z-index: 2;
+      animation: slideUp 0.5s ease-out 0.15s both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .cards-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      width: 100%;
+    }
+
+    .card {
+      background-color: var(--bg-white);
+      border: 1px solid var(--border-light);
+      border-radius: 16px;
+      padding: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s ease;
+      width: 100%;
+      text-align: left;
+      font-family: inherit;
+    }
+
+    .card:hover {
+      border-color: var(--border-hover);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+    }
+
+    .card:active { transform: scale(0.98); }
+    .card:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+
+    .card-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .card-icon img {
+      width: 32px;
+      height: 32px;
+      display: block;
+    }
+
+    .card-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .card-title {
+      font-family: var(--font-family-body);
+      font-size: 14px;
+      font-weight: 500;
+      line-height: 18px;
+      color: var(--text-light);
+    }
+
+    .card-subtitle {
+      font-family: var(--font-family-body);
+      font-size: 13px;
+      font-weight: 400;
+      line-height: 16px;
+      color: var(--text-secondary);
+    }
+
+    .card-action {
+      width: 24px;
+      height: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      flex-shrink: 0;
+      font-size: 20px;
+      line-height: 1;
+    }
+
+    /* ============ CTA secundário (link) ============ */
+    .cta-button {
+      width: 100%;
+      padding: 16px 24px;
+      background-color: transparent;
+      border: none;
+      font-family: var(--font-family-body);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--primary-color);
+      cursor: pointer;
+      text-align: center;
+      transition: background-color 0.2s ease, opacity 0.2s ease;
+      border-radius: 8px;
+    }
+
+    .cta-button:hover { background-color: rgba(193, 20, 77, 0.05); }
+    .cta-button:active { opacity: 0.8; }
+    .cta-button:focus-visible { outline: 2px solid var(--primary-color); outline-offset: 2px; }
+
+    /* ============ DEBUG MODAL (?debug=1) ============ */
+    .debug-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      color: #0f0;
+      font-family: 'SF Mono', Menlo, monospace;
+      font-size: 11px;
+      padding: 16px;
+      overflow-y: auto;
+      z-index: 9999;
+      display: none;
+    }
+    .debug-modal.show { display: block; }
+    .debug-modal pre { white-space: pre-wrap; word-break: break-all; }
+    .debug-close {
+      position: fixed; top: 16px; right: 16px;
+      background: #f00; color: #fff; border: none;
+      padding: 8px 16px; border-radius: 8px;
+      font-family: inherit; font-size: 14px;
+      cursor: pointer; z-index: 10000;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="background-decoration" aria-hidden="true"></div>
+
+    <div class="content">
+      <div class="check-circle" aria-hidden="true">
+        <img src="/icon-check.svg" alt="" />
+      </div>
+
+      <div class="page-header">
+        <h1 class="header-title">Presente de R$ 35 liberado!</h1>
+        <p class="header-description">Seu valor já está disponível pra usar no 'Comer no iFood'. Escolha onde vai usar.</p>
+      </div>
+    </div>
+
+    <div class="button-container">
+      <div class="cards-group">
+        <button class="card" data-option="mercado" type="button">
+          <div class="card-icon" aria-hidden="true">
+            <img src="/success-icon-groceries.svg" alt="" />
+          </div>
+          <div class="card-content">
+            <div class="card-title">Mercados com desconto</div>
+            <div class="card-subtitle">Compras com até 15% off</div>
+          </div>
+          <div class="card-action" aria-hidden="true">›</div>
+        </button>
+
+        <button class="card" data-option="hits" type="button">
+          <div class="card-icon" aria-hidden="true">
+            <img src="/success-icon-hits.svg" alt="" />
+          </div>
+          <div class="card-content">
+            <div class="card-title">iFood Hits</div>
+            <div class="card-subtitle">Mais pedidos da sua região</div>
+          </div>
+          <div class="card-action" aria-hidden="true">›</div>
+        </button>
+
+        <button class="card" data-option="extrato" type="button">
+          <div class="card-icon" aria-hidden="true">
+            <img src="/success-icon-coin.svg" alt="" />
+          </div>
+          <div class="card-content">
+            <div class="card-title">Ver meu extrato</div>
+            <div class="card-subtitle">Confira o valor do seu presente</div>
+          </div>
+          <div class="card-action" aria-hidden="true">›</div>
+        </button>
+      </div>
+
+      <button class="cta-button" id="laterBtn" type="button">Usar presente depois</button>
+    </div>
+  </div>
+
+  <!-- Debug modal (mostrado só quando ?debug=1) -->
+  <div class="debug-modal" id="debugModal">
+    <button class="debug-close" id="debugClose" type="button">Fechar</button>
+    <pre id="debugContent">Carregando...</pre>
+  </div>
+
+  <script>
+    // ==================== CONSTANTES ====================
+    const VARIANT = 'breakage';
+    const PAGE = 'sucesso';
+    const AMPLITUDE_API_KEY = ''; // mesma key da breakage.html — preencher antes do go-live
+
+    /**
+     * Mapeamento das opções → deeplinks/rotas.
+     *
+     * `channel` aceita:
+     *  - 'RedirectToDeepLinkExternal' → abre OUTRO app (ex.: iFood consumer)
+     *  - 'RedirectToDeepLinkInternal' → deeplink dentro do MESMO app (iFood Benefícios)
+     *  - 'RedirectToRoute'            → rota nomeada interna do iFood Benefícios
+     */
+    const DEEPLINKS = {
+      mercado: { channel: 'RedirectToDeepLinkExternal', target: 'ifood://list/2cd96a03-8678-4c7a-8a09-46220b2d4365?page=2cd96a03-8678-4c7a-8a09-46220b2d4365' },
+      hits:    { channel: 'RedirectToDeepLinkExternal', target: '' /* ex.: 'ifood://hits' */ },
+      extrato: { channel: 'RedirectToRoute',            target: '' /* ex.: '/wallet' no iFood Benefícios */ }
+    };
+
+    // Rota da home pra onde "Usar presente depois" leva
+    const HOME_ROUTE = { channel: 'RedirectToRoute', target: '/' };
+
+    // ==================== URL / PLATAFORMA ====================
+    const URL_PARAMS = new URLSearchParams(window.location.search);
+    const IS_ANDROID = /Android/i.test(navigator.userAgent);
+    const DEBUG = URL_PARAMS.get('debug') === '1';
+
+    // ==================== IDENTIDADE (espelha breakage.html) ====================
+    const _rawPersonId = URL_PARAMS.get('person_id');
+    const PERSON_ID_FROM_QUERY = (_rawPersonId && !_rawPersonId.includes('{{')) ? _rawPersonId : null;
+
+    function getCookie(name) {
+      const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+    function decodeJwtPayload(jwt) {
+      try {
+        const parts = jwt.split('.');
+        if (parts.length !== 3) return null;
+        let p = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+        while (p.length % 4) p += '=';
+        return JSON.parse(atob(p));
+      } catch (e) { return null; }
+    }
+    const ACCESS_TOKEN = getCookie('aAccessToken');
+    const JWT_CLAIMS = ACCESS_TOKEN ? decodeJwtPayload(ACCESS_TOKEN) : null;
+    const PERSON_ID_FROM_JWT = JWT_CLAIMS
+      ? (JWT_CLAIMS.personId || JWT_CLAIMS.person_id || JWT_CLAIMS.sub || JWT_CLAIMS.userId || null)
+      : null;
+    const PERSON_ID = PERSON_ID_FROM_QUERY || PERSON_ID_FROM_JWT || null;
+    const PERSON_ID_SOURCE = PERSON_ID_FROM_QUERY ? 'querystring'
+                           : PERSON_ID_FROM_JWT ? 'jwt cookie' : 'none';
+
+    function generateUuid() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+    }
+    function getOrCreateSessionUuid() {
+      try {
+        const key = 'ifood_discovery_uuid';
+        let id = localStorage.getItem(key);
+        if (!id) { id = generateUuid(); localStorage.setItem(key, id); }
+        return id;
+      } catch (e) { return generateUuid(); }
+    }
+    const SESSION_UUID = getOrCreateSessionUuid();
+
+    // ==================== BRIDGE ====================
+    function callChannel(name, msg) {
+      try {
+        if (window[name] && typeof window[name].postMessage === 'function') {
+          window[name].postMessage(typeof msg === 'string' ? msg : JSON.stringify(msg));
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function detectChannels() {
+      const names = ['OnClose','RedirectToRoute','RedirectToDeepLinkInternal','RedirectToDeepLinkExternal','RedirectToWeb','SetCookieValue','RemoveCookieValue','RemoveAllCookies','FetchInitialAddressData','FetchDataByZipCode','UpdateAccountData'];
+      return names.filter(n => window[n] && typeof window[n].postMessage === 'function');
+    }
+
+    function goHome() {
+      // Tenta rota nomeada da home; se canal indisponível, tenta deeplink iOS-friendly
+      if (callChannel(HOME_ROUTE.channel, HOME_ROUTE.target)) return true;
+      if (!IS_ANDROID) {
+        try { window.location.href = 'ifoodbenefits://inapp/home'; return true; } catch (e) {}
+      }
+      // Fallback final: fechar
+      return callChannel('OnClose', 'close');
+    }
+
+    // ==================== TRACKING ====================
+    function trackAmplitude(eventType, eventProperties) {
+      if (!AMPLITUDE_API_KEY) return;
+      const payload = {
+        api_key: AMPLITUDE_API_KEY,
+        events: [{
+          user_id: PERSON_ID || SESSION_UUID,
+          device_id: SESSION_UUID,
+          event_type: eventType,
+          event_properties: Object.assign({
+            variant: VARIANT,
+            page: PAGE,
+            session_uuid: SESSION_UUID,
+            person_id: PERSON_ID,
+            person_id_source: PERSON_ID_SOURCE,
+            platform: IS_ANDROID ? 'android' : 'ios_or_other',
+            page_url: window.location.href,
+            referrer: document.referrer || null
+          }, eventProperties || {}),
+          time: Date.now()
+        }]
+      };
+      try {
+        fetch('https://api2.amplitude.com/2/httpapi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          keepalive: true
+        });
+      } catch (e) {}
+    }
+
+    // ==================== OPÇÕES ====================
+    function onOptionClick(option) {
+      const cfg = DEEPLINKS[option] || {};
+      trackAmplitude('sucesso_option_click', {
+        option: option,
+        channel: cfg.channel || null,
+        target: cfg.target || null,
+        dispatched: !!(cfg.channel && cfg.target)
+      });
+
+      if (cfg.channel && cfg.target) {
+        const ok = callChannel(cfg.channel, cfg.target);
+        if (!ok) console.warn('[sucesso] canal indisponível:', cfg.channel, '→', cfg.target);
+      } else {
+        console.warn('[sucesso] deeplink ainda não configurado pra opção:', option);
+      }
+    }
+
+    document.querySelectorAll('.card').forEach(btn => {
+      btn.addEventListener('click', () => onOptionClick(btn.getAttribute('data-option')));
+    });
+
+    document.getElementById('laterBtn').addEventListener('click', () => {
+      trackAmplitude('sucesso_later_click');
+      goHome();
+    });
+
+    // ==================== DEBUG MODAL ====================
+    if (DEBUG) {
+      const cookies = document.cookie ? document.cookie.split(';').map(c => c.trim().split('=')[0]) : [];
+      const dbg = {
+        '— Identidade —': '',
+        'person_id (final)': PERSON_ID,
+        'person_id (fonte)': PERSON_ID_SOURCE,
+        'session_uuid': SESSION_UUID,
+        '— Cookies —': '',
+        'cookies disponíveis': cookies.length ? cookies.join(', ') : '(nenhum)',
+        'aAccessToken presente': !!ACCESS_TOKEN,
+        'JWT claims': JWT_CLAIMS,
+        '— Bridge / WebView —': '',
+        'canais Flutter detectados': detectChannels(),
+        'plataforma': IS_ANDROID ? 'android' : 'ios_or_other',
+        '— URL —': '',
+        'page_url': window.location.href,
+        'query params': Object.fromEntries(URL_PARAMS.entries()),
+        'referrer': document.referrer || '(nenhum)',
+        '— Config —': '',
+        'variant': VARIANT,
+        'page': PAGE,
+        'amplitude_key': AMPLITUDE_API_KEY ? 'preenchida' : '(vazia — tracking no-op)',
+        'DEEPLINKS': DEEPLINKS
+      };
+      document.getElementById('debugContent').textContent = JSON.stringify(dbg, null, 2);
+      document.getElementById('debugModal').classList.add('show');
+      document.getElementById('debugClose').addEventListener('click', () => {
+        document.getElementById('debugModal').classList.remove('show');
+      });
+    }
+
+    // Page view
+    trackAmplitude('sucesso_page_view');
+  </script>
+</body>
+</html>
