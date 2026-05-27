@@ -82,7 +82,7 @@ A API key (`AMPLITUDE_API_KEY`) está preenchida em `breakage.html` e `sucesso.h
 | sucesso      | `sucesso_option_click`    | `option` (mercado/frete_gratis/extrato), `channel`, `target`, `dispatched` |
 | sucesso      | `sucesso_later_click`     | — (link "Usar presente depois")         |
 
-Todos carregam: `variant=breakage`, `session_uuid`, `person_id` (se houver), `person_id_source`, `platform`, `page_url`, `referrer`.
+Todos carregam: `teste=breakage`, `variant=breakage`, `session_uuid`, `person_id` (se houver), `person_id_source`, `platform`, `page_url`, `referrer`.
 
 ---
 
