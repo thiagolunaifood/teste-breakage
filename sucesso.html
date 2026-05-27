@@ -316,13 +316,13 @@
           <div class="card-action" aria-hidden="true">›</div>
         </button>
 
-        <button class="card" data-option="hits" type="button">
+        <button class="card" data-option="frete_gratis" type="button">
           <div class="card-icon" aria-hidden="true">
-            <img src="/success-icon-hits.svg" alt="" />
+            <img src="/success-icon-frete-gratis.svg" alt="" />
           </div>
           <div class="card-content">
-            <div class="card-title">iFood Hits</div>
-            <div class="card-subtitle">Mais pedidos da sua região</div>
+            <div class="card-title">Restaurantes com frete grátis</div>
+            <div class="card-subtitle">Peça sem pagar entrega</div>
           </div>
           <div class="card-action" aria-hidden="true">›</div>
         </button>
@@ -364,9 +364,9 @@
      *  - 'RedirectToRoute'            → rota nomeada interna do iFood Benefícios
      */
     const DEEPLINKS = {
-      mercado: { channel: 'RedirectToDeepLinkExternal', target: 'ifood://list/2cd96a03-8678-4c7a-8a09-46220b2d4365?page=2cd96a03-8678-4c7a-8a09-46220b2d4365' },
-      hits:    { channel: 'RedirectToDeepLinkExternal', target: '' /* ex.: 'ifood://hits' */ },
-      extrato: { channel: 'RedirectToRoute',            target: '' /* ex.: '/wallet' no iFood Benefícios */ }
+      mercado:     { channel: 'RedirectToDeepLinkExternal', target: 'ifood://list/f0d89ed9-1535-4a21-acd9-91dbe84bc782' },
+      frete_gratis:{ channel: 'RedirectToDeepLinkExternal', target: 'ifood://list/f237bf66-69cd-4767-a422-3a869cd1abc1' },
+      extrato:     { channel: 'RedirectToRoute',            target: '' /* ex.: '/wallet' no iFood Benefícios */ }
     };
 
     // Rota da home pra onde "Usar presente depois" leva

@@ -50,8 +50,8 @@ Observações sobre o deeplink:
 1. Usuário toca o banner na home do app
 2. WebView abre `/breakage` → apresenta o presente de R$ 35 com prazo de 4 dias
 3. Usuário toca **Quero meu presente** → tracking `lp_cta_click` + navega pra `/sucesso`
-4. `/sucesso` confirma a liberação (check verde grande) e oferece 3 atalhos: mercado com desconto, hits, ver extrato
-5. Cada atalho dispara um deeplink configurado em `DEEPLINKS` (sucesso.html). Hoje os targets de `hits` e `extrato` estão vazios — preencher quando soubermos os URIs reais. `mercado` já está configurado.
+4. `/sucesso` confirma a liberação (check verde grande) e oferece 3 atalhos: mercado com desconto, restaurantes com frete grátis, ver extrato
+5. Cada atalho dispara um deeplink configurado em `DEEPLINKS` (sucesso.html). `mercado` e `frete_gratis` já têm deeplinks `ifood://list/...`. `extrato` ainda está vazio — preencher quando soubermos a rota real.
 6. Link **Usar presente depois** volta pra home do iFood Benefícios (canal `RedirectToRoute` com fallback `OnClose`).
 
 ---
@@ -79,7 +79,7 @@ A API key fica vazia em produção até alguém preencher `AMPLITUDE_API_KEY` no
 | breakage     | `lp_faq_open`             | `question`                              |
 | breakage     | `lp_cta_click`            | `cta_type=positive`, `cta_label`        |
 | sucesso      | `sucesso_page_view`       | —                                       |
-| sucesso      | `sucesso_option_click`    | `option` (mercado/hits/extrato), `channel`, `target`, `dispatched` |
+| sucesso      | `sucesso_option_click`    | `option` (mercado/frete_gratis/extrato), `channel`, `target`, `dispatched` |
 | sucesso      | `sucesso_later_click`     | — (link "Usar presente depois")         |
 
 Todos carregam: `variant=breakage`, `session_uuid`, `person_id` (se houver), `person_id_source`, `platform`, `page_url`, `referrer`.
@@ -132,7 +132,7 @@ Pushes futuros pra `main` disparam deploy automático.
 ## Checklist pré-go-live
 
 - [ ] `AMPLITUDE_API_KEY` preenchida em `breakage.html` e `sucesso.html`
-- [ ] Targets em `DEEPLINKS` (sucesso.html) preenchidos com os URIs reais (`hits`, `extrato`). `mercado` já está configurado.
+- [ ] Target em `DEEPLINKS.extrato` (sucesso.html) preenchido com a rota real do extrato. `mercado` e `frete_gratis` já estão configurados.
 - [ ] `HOME_ROUTE.target` em `sucesso.html` confirmado com mobile (rota nomeada da home do iFood Benefícios)
 - [ ] Debug modal não atrapalha (acessar sem `?debug=1` confirma que está escondido)
 - [ ] Testado no app Android (`?debug=1` pra ver canais Flutter)

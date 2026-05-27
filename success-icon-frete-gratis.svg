@@ -1,0 +1,8 @@
+<svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tag de preço grátis: etiqueta com "R$ 0" -->
+  <path d="M12.5 2.5 L21 2.5 C21.5 2.5 22 3 22 3.5 L22 12 C22 12.4 21.85 12.78 21.56 13.06 L13.06 21.56 C12.5 22.15 11.56 22.15 10.97 21.56 L2.94 13.53 C2.35 12.94 2.35 12 2.94 11.44 L11.44 2.94 C11.72 2.65 12.1 2.5 12.5 2.5 Z" fill="#8F0340"/>
+  <!-- Furo da tag -->
+  <circle cx="17.5" cy="7" r="1.6" fill="#fff"/>
+  <!-- Texto "R$ 0" simplificado: R + $ + 0 minúsculos -->
+  <text x="11.5" y="16" font-family="Arial, sans-serif" font-size="6.5" font-weight="bold" fill="#fff" text-anchor="middle" transform="rotate(-45 11.5 16)">R$0</text>
+</svg>
