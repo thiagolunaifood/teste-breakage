@@ -369,8 +369,10 @@
       extrato:     { channel: 'RedirectToDeepLinkInternal', target: 'ifoodbenefits://inapp/home?page=/transaction' }
     };
 
-    // Rota da home pra onde "Usar presente depois" leva
-    const HOME_ROUTE = { channel: 'RedirectToRoute', target: '/' };
+    // Deeplink da home pra onde "Usar presente depois" leva.
+    // Usamos RedirectToDeepLinkInternal (e não RedirectToRoute) porque target='/'
+    // no Android era interpretado como "resetar stack" e deslogava o usuário.
+    const HOME_DEEPLINK = { channel: 'RedirectToDeepLinkInternal', target: 'ifoodbenefits://inapp/home' };
 
     // ==================== URL / PLATAFORMA ====================
     const URL_PARAMS = new URLSearchParams(window.location.search);
@@ -437,12 +439,13 @@
     }
 
     function goHome() {
-      // Tenta rota nomeada da home; se canal indisponível, tenta deeplink iOS-friendly
-      if (callChannel(HOME_ROUTE.channel, HOME_ROUTE.target)) return true;
+      // 1) Tenta o canal Flutter com o deeplink interno (preserva sessão em Android + iOS)
+      if (callChannel(HOME_DEEPLINK.channel, HOME_DEEPLINK.target)) return true;
+      // 2) Se o canal não responder e estiver fora do app (testes), tenta o scheme via navegação
       if (!IS_ANDROID) {
-        try { window.location.href = 'ifoodbenefits://inapp/home'; return true; } catch (e) {}
+        try { window.location.href = HOME_DEEPLINK.target; return true; } catch (e) {}
       }
-      // Fallback final: fechar
+      // 3) Fallback final: pelo menos fechar a WebView
       return callChannel('OnClose', 'close');
     }
 
