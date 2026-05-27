@@ -69,7 +69,7 @@ Os 5 WOFF2 vivem em `/fonts/`. Não republicar em outro repo.
 
 ## Tracking (Amplitude)
 
-A API key fica vazia em produção até alguém preencher `AMPLITUDE_API_KEY` no topo do `<script>` de cada HTML. Quando vazia, `trackAmplitude()` é no-op silencioso.
+A API key (`AMPLITUDE_API_KEY`) está preenchida em `breakage.html` e `sucesso.html`. Se for esvaziada, `trackAmplitude()` vira no-op silencioso (não quebra a página).
 
 **Eventos disparados:**
 
@@ -131,7 +131,7 @@ Pushes futuros pra `main` disparam deploy automático.
 
 ## Checklist pré-go-live
 
-- [ ] `AMPLITUDE_API_KEY` preenchida em `breakage.html` e `sucesso.html`
+- [x] `AMPLITUDE_API_KEY` preenchida em `breakage.html` e `sucesso.html`
 - [x] Todos os deeplinks de `DEEPLINKS` (sucesso.html) configurados: `mercado`, `frete_gratis`, `extrato`
 - [ ] `HOME_ROUTE.target` em `sucesso.html` confirmado com mobile (rota nomeada da home do iFood Benefícios)
 - [ ] Debug modal não atrapalha (acessar sem `?debug=1` confirma que está escondido)
