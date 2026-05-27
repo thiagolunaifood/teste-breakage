@@ -366,7 +366,7 @@
     const DEEPLINKS = {
       mercado:     { channel: 'RedirectToDeepLinkExternal', target: 'ifood://list/f0d89ed9-1535-4a21-acd9-91dbe84bc782' },
       frete_gratis:{ channel: 'RedirectToDeepLinkExternal', target: 'ifood://list/f237bf66-69cd-4767-a422-3a869cd1abc1' },
-      extrato:     { channel: 'RedirectToRoute',            target: '' /* ex.: '/wallet' no iFood Benefícios */ }
+      extrato:     { channel: 'RedirectToDeepLinkInternal', target: 'ifoodbenefits://inapp/home?page=/transaction' }
     };
 
     // Rota da home pra onde "Usar presente depois" leva

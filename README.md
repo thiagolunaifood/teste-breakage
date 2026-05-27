@@ -132,7 +132,7 @@ Pushes futuros pra `main` disparam deploy automático.
 ## Checklist pré-go-live
 
 - [ ] `AMPLITUDE_API_KEY` preenchida em `breakage.html` e `sucesso.html`
-- [ ] Target em `DEEPLINKS.extrato` (sucesso.html) preenchido com a rota real do extrato. `mercado` e `frete_gratis` já estão configurados.
+- [x] Todos os deeplinks de `DEEPLINKS` (sucesso.html) configurados: `mercado`, `frete_gratis`, `extrato`
 - [ ] `HOME_ROUTE.target` em `sucesso.html` confirmado com mobile (rota nomeada da home do iFood Benefícios)
 - [ ] Debug modal não atrapalha (acessar sem `?debug=1` confirma que está escondido)
 - [ ] Testado no app Android (`?debug=1` pra ver canais Flutter)
