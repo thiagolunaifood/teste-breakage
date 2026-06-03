@@ -1,0 +1,887 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+<meta name="theme-color" content="#A91046" />
+<title>iFood Móvel — Um número com propósito</title>
+<style>
+  /* iFood Brand Fonts — local @font-face */
+  @font-face{font-family:'iFoodTextos';src:url('/fonts/TipoiFoodTextos-Thin.woff2') format('woff2');font-weight:100;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTextos';src:url('/fonts/TipoiFoodTextos-Light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTextos';src:url('/fonts/TipoiFoodTextos-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTextos';src:url('/fonts/TipoiFoodTextos-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTextos';src:url('/fonts/TipoiFoodTextos-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTextos';src:url('/fonts/TipoiFoodTextos-ExtraBold.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTitulos';src:url('/fonts/TipoiFoodTitulos-Light.woff2') format('woff2');font-weight:300;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTitulos';src:url('/fonts/TipoiFoodTitulos-Regular.woff2') format('woff2');font-weight:400;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTitulos';src:url('/fonts/TipoiFoodTitulos-Medium.woff2') format('woff2');font-weight:500;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTitulos';src:url('/fonts/TipoiFoodTitulos-Bold.woff2') format('woff2');font-weight:700;font-style:normal;font-display:swap;}
+  @font-face{font-family:'iFoodTitulos';src:url('/fonts/TipoiFoodTitulos-ExtraBold.woff2') format('woff2');font-weight:800;font-style:normal;font-display:swap;}
+</style>
+<style>
+  :root{
+    --magenta:#A91046;
+    --magenta-bright:#EA1976;
+    --magenta-dark:#8B0938;
+    --magenta-soft:#FCE7EE;
+    --green:#00BC72;
+    --text:#1A1A1A;
+    --text-secondary:#5C5C5C;
+    --grey-card:#F4F4F4;
+    --grey-line:#E5E5E5;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+  html,body{
+    font-family:'iFoodTextos',-apple-system,BlinkMacSystemFont,'Inter',sans-serif;
+    color:var(--text);background:#fff;
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  @media (min-width:520px){
+    body{background:#EFEFEF;}
+  }
+
+  .app{
+    max-width:480px;margin:0 auto;background:#fff;position:relative;
+    min-height:100vh;overflow-x:hidden;
+  }
+  @media (min-width:520px){
+    .app{min-height:100vh;box-shadow:0 0 40px rgba(0,0,0,.08);}
+  }
+
+  .view{display:none;}
+  .view.active{display:block;}
+  .view-lp,.view-survey{padding-bottom:170px;}
+  .view-thanks{min-height:100vh;display:none;}
+
+  /* ============ LP HEADER ============ */
+  .lp-header{
+    background:linear-gradient(180deg,var(--magenta) 0%, var(--magenta-dark) 100%);
+    color:#fff;padding:0 0 30px;position:relative;overflow:hidden;
+    padding-top:env(safe-area-inset-top);
+  }
+  .lp-topnav{
+    display:flex;justify-content:space-between;align-items:center;
+    padding:14px 16px 4px;position:relative;z-index:3;
+  }
+  .lp-back,.lp-help{
+    width:38px;height:38px;border-radius:50%;background:rgba(255,255,255,.18);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;color:#fff;
+  }
+  .lp-help{background:rgba(255,255,255,.95);color:var(--magenta);}
+  .lp-back svg,.lp-help svg{width:18px;height:18px;}
+  .lp-title-bar{font-size:15px;font-weight:700;color:#fff;font-family:'iFoodTitulos',sans-serif;}
+
+  .lp-hero{padding:20px 24px 8px;position:relative;z-index:3;}
+  .lp-hero .eyebrow{
+    display:inline-flex;align-items:center;gap:6px;
+    background:rgba(255,255,255,.18);backdrop-filter:blur(6px);
+    font-size:11px;font-weight:700;padding:6px 12px;border-radius:999px;
+    text-transform:uppercase;letter-spacing:.6px;margin-bottom:14px;
+  }
+  .lp-hero .eyebrow .dot{width:6px;height:6px;border-radius:50%;background:#7DE0BE;}
+  .lp-hero h1{
+    font-family:'iFoodTitulos',sans-serif;
+    font-size:30px;font-weight:800;line-height:1.05;letter-spacing:-.8px;margin-bottom:10px;
+  }
+  .lp-hero h1 em{font-style:italic;color:#FFC0D6;font-weight:800;}
+  .lp-hero p{font-size:15px;line-height:1.45;opacity:.95;max-width:90%;font-weight:400;}
+
+  .lp-illu{position:relative;margin:24px auto 0;width:240px;height:180px;max-width:100%;}
+
+  .lp-chips{display:flex;gap:8px;padding:18px 20px 0;overflow-x:auto;scrollbar-width:none;}
+  .lp-chips::-webkit-scrollbar{display:none;}
+  .lp-chip{
+    flex-shrink:0;background:#fff;color:var(--text);
+    padding:8px 14px;border-radius:999px;font-size:12px;font-weight:700;
+    display:flex;align-items:center;gap:6px;box-shadow:0 2px 6px rgba(0,0,0,.06);
+  }
+
+  /* ============ LP BODY ============ */
+  .lp-body{
+    background:#fff;border-top-left-radius:24px;border-top-right-radius:24px;
+    margin-top:-18px;padding:24px 0 8px;position:relative;z-index:4;
+  }
+  .lp-section{padding:14px 20px;}
+  .lp-section h2{
+    font-family:'iFoodTitulos',sans-serif;font-size:22px;font-weight:800;
+    line-height:1.15;letter-spacing:-.4px;
+  }
+  .lp-section h2 em{font-style:italic;color:var(--magenta-bright);font-weight:800;}
+  .lp-section .sub{font-size:13px;color:var(--text-secondary);margin-top:6px;}
+
+  .social-strip{
+    background:var(--magenta-soft);padding:20px;margin:8px 0;text-align:center;
+  }
+  .social-strip .num{
+    font-family:'iFoodTitulos',sans-serif;font-size:28px;font-weight:800;
+    color:var(--magenta);letter-spacing:-.6px;
+  }
+  .social-strip .lbl{font-size:13px;color:var(--text);margin-top:2px;font-weight:500;}
+
+  .bullets{display:flex;flex-direction:column;gap:14px;margin-top:14px;}
+  .bullet{display:flex;gap:12px;align-items:flex-start;}
+  .bullet .b-ico{
+    width:40px;height:40px;border-radius:12px;background:var(--magenta-soft);color:var(--magenta);
+    display:flex;align-items:center;justify-content:center;flex-shrink:0;
+  }
+  .bullet .b-ico .emoji{font-size:20px;}
+  .bullet .b-text strong{
+    font-size:14px;font-weight:700;display:block;margin-bottom:2px;font-family:'iFoodTitulos',sans-serif;
+  }
+  .bullet .b-text span{font-size:13px;color:var(--text-secondary);line-height:1.45;}
+
+  .conn-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px;}
+  .conn-card{background:#fff;border:1px solid var(--grey-line);border-radius:16px;padding:14px;}
+  .conn-card .icon{
+    width:36px;height:36px;border-radius:10px;background:var(--magenta-soft);color:var(--magenta);
+    display:flex;align-items:center;justify-content:center;margin-bottom:10px;
+  }
+  .conn-card .icon svg{width:20px;height:20px;}
+  .conn-card .t{font-size:13px;font-weight:700;font-family:'iFoodTitulos',sans-serif;}
+  .conn-card .d{font-size:11px;color:var(--text-secondary);margin-top:4px;line-height:1.35;}
+
+  .testi-scroll{
+    display:flex;gap:12px;overflow-x:auto;padding:14px 20px 4px;scrollbar-width:none;
+  }
+  .testi-scroll::-webkit-scrollbar{display:none;}
+  .testi{
+    flex:0 0 250px;background:#fff;border:1px solid var(--grey-line);border-radius:16px;padding:16px;
+  }
+  .testi .head{display:flex;gap:10px;align-items:center;margin-bottom:10px;}
+  .testi .av{
+    width:40px;height:40px;border-radius:50%;
+    display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;
+  }
+  .testi .nm{font-size:13px;font-weight:700;font-family:'iFoodTitulos',sans-serif;}
+  .testi .role{font-size:11px;color:var(--text-secondary);}
+  .testi .q{font-size:13px;color:var(--text);line-height:1.45;}
+
+  .faq{margin-top:14px;}
+  .faq-item{border-bottom:1px solid var(--grey-line);}
+  .faq-q{
+    display:flex;justify-content:space-between;align-items:center;gap:12px;
+    padding:16px 0;cursor:pointer;font-size:14px;font-weight:700;
+  }
+  .faq-q svg{
+    width:18px;height:18px;color:var(--magenta);transition:transform .2s ease;flex-shrink:0;
+  }
+  .faq-item.open .faq-q svg{transform:rotate(180deg);}
+  .faq-a{
+    font-size:13px;color:var(--text-secondary);line-height:1.5;
+    max-height:0;overflow:hidden;transition:max-height .25s ease, padding .25s ease;
+  }
+  .faq-item.open .faq-a{max-height:300px;padding:0 0 16px;}
+
+  .disclaimer{
+    text-align:center;font-size:11px;color:var(--text-secondary);
+    padding:18px 30px 4px;line-height:1.4;
+  }
+  .disclaimer a{color:var(--text-secondary);text-decoration:underline;}
+
+  /* ============ FIXED CTAs ============ */
+  .cta-sheet{
+    position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+    width:100%;max-width:480px;background:#fff;border-top:1px solid var(--grey-line);
+    padding:14px 20px calc(14px + env(safe-area-inset-bottom));z-index:50;
+    box-shadow:0 -8px 20px rgba(0,0,0,.06);
+  }
+  .cta-sheet .cta-primary{
+    width:100%;background:var(--magenta);color:#fff;border:none;
+    padding:15px;border-radius:999px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
+  }
+  .cta-sheet .cta-secondary{
+    width:100%;background:transparent;color:var(--magenta);border:none;
+    padding:12px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;margin-top:4px;
+  }
+
+  /* ============ SURVEY ============ */
+  .survey-head{
+    padding:18px 20px 4px;display:flex;justify-content:space-between;align-items:center;
+    padding-top:calc(18px + env(safe-area-inset-top));
+  }
+  .survey-close{
+    width:38px;height:38px;border-radius:50%;background:var(--grey-card);
+    display:flex;align-items:center;justify-content:center;cursor:pointer;border:none;
+  }
+  .survey-close svg{width:16px;height:16px;}
+  .survey-progress{
+    height:4px;background:var(--grey-line);margin:8px 20px;border-radius:2px;overflow:hidden;
+  }
+  .survey-progress .bar{height:100%;background:var(--magenta);width:0%;transition:width .3s ease;}
+
+  .survey-body{padding:18px 20px 8px;}
+  .survey-eyebrow{
+    font-size:11px;font-weight:700;color:var(--magenta);
+    text-transform:uppercase;letter-spacing:.6px;margin-bottom:8px;
+  }
+  .survey-body h2{
+    font-family:'iFoodTitulos',sans-serif;font-size:24px;font-weight:800;line-height:1.15;letter-spacing:-.5px;
+  }
+  .survey-body p.sub{font-size:13px;color:var(--text-secondary);margin-top:6px;line-height:1.45;}
+
+  .q-block{margin-top:24px;}
+  .q-block .q-label{
+    font-size:14px;font-weight:700;margin-bottom:10px;font-family:'iFoodTitulos',sans-serif;
+  }
+  .options{display:flex;flex-direction:column;gap:8px;}
+  .opt{
+    display:flex;align-items:center;gap:10px;
+    padding:12px 14px;border:1px solid var(--grey-line);border-radius:14px;
+    cursor:pointer;font-size:13px;font-weight:500;background:#fff;
+    transition:all .15s ease;
+  }
+  .opt input{display:none;}
+  .opt .check{
+    width:18px;height:18px;border-radius:50%;border:1.5px solid var(--grey-line);flex-shrink:0;
+    display:flex;align-items:center;justify-content:center;
+  }
+  .opt .check::after{
+    content:"";width:8px;height:8px;border-radius:50%;background:var(--magenta);
+    opacity:0;transition:opacity .15s ease;
+  }
+  .opt.selected{border-color:var(--magenta);background:var(--magenta-soft);}
+  .opt.selected .check{border-color:var(--magenta);}
+  .opt.selected .check::after{opacity:1;}
+
+  .textarea{
+    width:100%;min-height:90px;padding:12px 14px;
+    border:1px solid var(--grey-line);border-radius:14px;
+    font-family:inherit;font-size:13px;color:var(--text);
+    resize:none;outline:none;transition:border-color .15s ease;
+  }
+  .textarea:focus{border-color:var(--magenta);}
+
+  .submit-sheet{
+    position:fixed;bottom:0;left:50%;transform:translateX(-50%);
+    width:100%;max-width:480px;background:#fff;
+    border-top:1px solid var(--grey-line);
+    padding:14px 20px calc(14px + env(safe-area-inset-bottom));z-index:50;
+  }
+  .submit-sheet button{
+    width:100%;background:var(--magenta);color:#fff;border:none;
+    padding:15px;border-radius:999px;font-size:15px;font-weight:700;cursor:pointer;font-family:inherit;
+  }
+  .submit-sheet button:disabled{background:var(--grey-line);color:var(--text-secondary);cursor:not-allowed;}
+
+  /* ============ THANKS ============ */
+  .thanks-wrap{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    text-align:center;padding:80px 30px 0;min-height:100vh;
+  }
+  .thanks-icon{
+    width:84px;height:84px;border-radius:50%;background:var(--magenta-soft);color:var(--magenta);
+    display:flex;align-items:center;justify-content:center;margin-bottom:20px;
+  }
+  .thanks-icon svg{width:42px;height:42px;}
+  .thanks-wrap h2{
+    font-family:'iFoodTitulos',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.5px;margin-bottom:8px;
+  }
+  .thanks-wrap p{font-size:14px;color:var(--text-secondary);line-height:1.5;max-width:280px;}
+
+  /* Esconde botões de fechar no Android — WebView não permite navegação
+     por custom schemes. Usuário usa back do sistema. */
+  body.is-android .lp-back,
+  body.is-android .survey-close{
+    visibility:hidden;pointer-events:none;
+  }
+
+
+  /* ============ SHARED FEATURE GRID ============ */
+  .feat-grid{
+    display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;
+  }
+  .feat-card{
+    background:#fff;border:1px solid var(--grey-line);border-radius:16px;
+    padding:14px 12px;display:flex;flex-direction:column;
+  }
+  .feat-illu{
+    width:48px;height:48px;display:flex;align-items:center;justify-content:center;
+    margin-bottom:10px;
+  }
+  .feat-t{
+    font-family:'iFoodTitulos',sans-serif;font-size:13px;font-weight:700;
+    line-height:1.2;margin-bottom:4px;
+  }
+  .feat-d{
+    font-size:11px;color:var(--text-secondary);line-height:1.4;
+  }
+  @media (max-width:340px){
+    .feat-grid{grid-template-columns:1fr;}
+  }
+
+  /* ============ SALDO: tiers de desconto progressivo ============ */
+  .tiers{
+    display:flex;flex-direction:column;gap:10px;margin-top:14px;
+  }
+  .tier{
+    display:flex;align-items:center;gap:14px;padding:14px;
+    border-radius:16px;border:1px solid var(--grey-line);background:#fff;
+  }
+  .tier.highlight{
+    background:linear-gradient(135deg,#FCE7EE 0%, #fff 100%);
+    border-color:var(--magenta);
+  }
+  .tier .tier-n{
+    width:48px;height:48px;border-radius:50%;
+    background:var(--magenta);color:#fff;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    flex-shrink:0;font-family:'iFoodTitulos',sans-serif;line-height:1;
+  }
+  .tier .tier-n .nn{font-size:18px;font-weight:800;}
+  .tier .tier-n .pp{font-size:9px;font-weight:700;opacity:.9;margin-top:2px;}
+  .tier .tier-text strong{
+    display:block;font-family:'iFoodTitulos',sans-serif;font-size:14px;font-weight:700;margin-bottom:2px;
+  }
+  .tier .tier-text span{font-size:12px;color:var(--text-secondary);line-height:1.4;}
+
+  .cats{
+    display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:16px 0 0;
+  }
+  .cat{
+    display:flex;align-items:center;gap:6px;background:var(--magenta-soft);
+    color:var(--magenta);padding:8px 12px;border-radius:999px;
+    font-size:12px;font-weight:700;font-family:'iFoodTitulos',sans-serif;
+  }
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- ====== LP VIEW ====== -->
+  <div class="view view-lp active" id="viewLP">
+    <div class="lp-header">
+      <div class="lp-topnav">
+        <button class="lp-back" onclick="onBack()" aria-label="Voltar">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <div class="lp-title-bar">iFood Móvel</div>
+        <button class="lp-help" onclick="onHelp()" aria-label="Ajuda">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><circle cx="12" cy="17" r=".5" fill="currentColor"/></svg>
+        </button>
+      </div>
+      <div class="lp-hero">
+        <div class="eyebrow"><span class="dot"></span>Novo no iFood Benefícios</div>
+        <h1>Um número novo, com o <em>propósito que você quiser</em></h1>
+        <p>Uma segunda linha pra usar do jeito que faz sentido pra você: separar trabalho de vida pessoal, ter um número só pra família, abrir um lado B — o que precisar.</p>
+        <div class="lp-illu">
+          <svg viewBox="0 0 240 180" width="100%" height="100%">
+            <rect x="40" y="30" width="70" height="130" rx="14" fill="#fff"/>
+            <rect x="46" y="36" width="58" height="118" rx="8" fill="#FCE7EE"/>
+            <text x="75" y="100" text-anchor="middle" font-size="32">📱</text>
+            <text x="75" y="140" text-anchor="middle" font-size="9" font-weight="800" fill="#A91046" font-family="iFoodTitulos">LINHA 1</text>
+            <rect x="130" y="30" width="70" height="130" rx="14" fill="#fff"/>
+            <rect x="136" y="36" width="58" height="118" rx="8" fill="#FCE7EE"/>
+            <text x="165" y="100" text-anchor="middle" font-size="32">📱</text>
+            <text x="165" y="140" text-anchor="middle" font-size="9" font-weight="800" fill="#A91046" font-family="iFoodTitulos">LINHA 2</text>
+          </svg>
+        </div>
+      </div>
+      <div class="lp-chips">
+        <div class="lp-chip">💼 Trabalho</div>
+        <div class="lp-chip">🏠 Pessoal</div>
+        <div class="lp-chip">📵 Sem mistura</div>
+      </div>
+    </div>
+
+    <div class="lp-body">
+
+      <!-- ============ BLOCO COMPARTILHADO: Como funciona ============ -->
+      <div class="lp-section">
+        <h2>Como <em>funciona</em></h2>
+        <div class="sub">O que está incluso, independente do plano que você escolher.</div>
+        <div class="feat-grid">
+
+          <div class="feat-card">
+            <div class="feat-illu">
+              <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+                <rect x="10" y="14" width="36" height="22" rx="4" fill="#FCE7EE" stroke="#A91046" stroke-width="2"/>
+                <text x="28" y="29" text-anchor="middle" font-size="11" font-weight="800" fill="#A91046" font-family="iFoodTitulos">11 9</text>
+                <path d="M40 40 L52 28" stroke="#00BC72" stroke-width="3" stroke-linecap="round"/>
+                <polygon points="50,26 56,28 52,32" fill="#00BC72"/>
+              </svg>
+            </div>
+            <div class="feat-t">Traga o seu número</div>
+            <div class="feat-d">Mudou de plano, mas o número continua o mesmo. Portabilidade gratuita de qualquer operadora, em até 3 dias úteis — sua linha atual segue funcionando enquanto isso.</div>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-illu">
+              <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+                <path d="M14 32 a18 18 0 0 1 36 0" fill="none" stroke="#A91046" stroke-width="3" stroke-linecap="round"/>
+                <circle cx="20" cy="42" r="4" fill="#A91046"/>
+                <circle cx="44" cy="42" r="4" fill="#A91046"/>
+                <text x="32" y="58" text-anchor="middle" font-size="10" font-weight="800" fill="#A91046" font-family="iFoodTitulos">∞</text>
+              </svg>
+            </div>
+            <div class="feat-t">Ligações nacionais ilimitadas</div>
+            <div class="feat-d">Fale o quanto quiser, com quem quiser. Ligações pra qualquer telefone do Brasil, fixo ou celular, sem contar minutos.</div>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-illu">
+              <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+                <circle cx="20" cy="32" r="10" fill="#25D366"/>
+                <text x="20" y="36" text-anchor="middle" font-size="13">💬</text>
+                <circle cx="44" cy="32" r="10" fill="#EA1976"/>
+                <text x="44" y="36" text-anchor="middle" font-size="13">🍔</text>
+                <text x="32" y="56" text-anchor="middle" font-size="9" font-weight="800" fill="#00BC72" font-family="iFoodTitulos">ILIMITADO</text>
+              </svg>
+            </div>
+            <div class="feat-t">WhatsApp e iFood ilimitados</div>
+            <div class="feat-d">O uso desses apps não desconta da sua internet. Mesmo se a franquia do mês acabar, eles continuam funcionando normalmente.</div>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-illu">
+              <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+                <rect x="14" y="14" width="36" height="36" rx="18" fill="#FCE7EE" stroke="#A91046" stroke-width="2"/>
+                <path d="M22 22 L42 42 M42 22 L22 42" stroke="#A91046" stroke-width="3" stroke-linecap="round"/>
+                <text x="32" y="58" text-anchor="middle" font-size="9" font-weight="800" fill="#A91046" font-family="iFoodTitulos">FIDELIDADE</text>
+              </svg>
+            </div>
+            <div class="feat-t">Sem fidelidade</div>
+            <div class="feat-d">Sem contrato que prende, sem multa. Você fica porque quer e pode trocar de plano ou cancelar quando decidir.</div>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-illu">
+              <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+                <circle cx="32" cy="32" r="20" fill="#FCE7EE" stroke="#A91046" stroke-width="2"/>
+                <path d="M24 28 a3 3 0 0 1 6 0 a3 3 0 0 1 -3 4 v3" stroke="#A91046" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+                <circle cx="27" cy="40" r="1.5" fill="#A91046"/>
+                <path d="M40 36 L46 36 M40 40 L44 40" stroke="#00BC72" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </div>
+            <div class="feat-t">Atendimento de qualidade</div>
+            <div class="feat-d">Suporte com gente de verdade, rápido e sem labirinto de menu. Quando precisar de ajuda, é só chamar.</div>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-illu">
+              <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+                <rect x="20" y="10" width="24" height="44" rx="4" fill="#fff" stroke="#A91046" stroke-width="2"/>
+                <rect x="23" y="14" width="18" height="32" rx="1" fill="#FCE7EE"/>
+                <circle cx="32" cy="50" r="2" fill="#A91046"/>
+                <text x="32" y="34" text-anchor="middle" font-size="14">📱</text>
+              </svg>
+            </div>
+            <div class="feat-t">Experiência digital</div>
+            <div class="feat-d">Tudo na palma da mão: consumo em tempo real, trocar de plano, segunda via, suporte — direto pelo app, sem ligar pra ninguém nem ir em loja.</div>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-illu">
+              <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+                <rect x="14" y="20" width="36" height="24" rx="4" fill="#FCE7EE" stroke="#A91046" stroke-width="2"/>
+                <circle cx="22" cy="32" r="3" fill="#A91046"/>
+                <rect x="28" y="29" width="16" height="6" rx="1" fill="#A91046"/>
+                <text x="32" y="56" text-anchor="middle" font-size="9" font-weight="800" fill="#A91046" font-family="iFoodTitulos">CHIP / eSIM</text>
+              </svg>
+            </div>
+            <div class="feat-t">Chip físico ou eSIM</div>
+            <div class="feat-d">Você escolhe: recebe o chip em casa ou ativa o eSIM na hora pelo QR code (em aparelhos compatíveis), sem esperar nada chegar.</div>
+          </div>
+
+          <div class="feat-card">
+            <div class="feat-illu">
+              <svg viewBox="0 0 64 64" width="48" height="48" aria-hidden="true">
+                <circle cx="32" cy="32" r="20" fill="none" stroke="#A91046" stroke-width="2"/>
+                <path d="M12 32 H52 M32 12 a25 25 0 0 1 0 40 a25 25 0 0 1 0 -40" fill="none" stroke="#A91046" stroke-width="2"/>
+                <circle cx="32" cy="32" r="3" fill="#00BC72"/>
+              </svg>
+            </div>
+            <div class="feat-t">Cobertura nacional</div>
+            <div class="feat-d">Sinal de uma das maiores redes do país, da capital ao interior — toda a rede onde a Vivo opera, em todo território nacional.</div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ============ BLOCO COMPARTILHADO: FAQ ============ -->
+      <div class="lp-section">
+        <h2>Perguntas <em>frequentes</em></h2>
+        <div class="faq" id="faq">
+          <div class="faq-item">
+            <div class="faq-q">A linha funciona em todo o Brasil?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+            <div class="faq-a">Sim. A linha utiliza a rede da Vivo, uma das maiores operadoras do país, com cobertura nacional — no trabalho ou em casa.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Consigo manter meu número atual?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+            <div class="faq-a">Sim, com a portabilidade. É gratuita e leva até 3 dias úteis. Durante o processo seu número continua funcionando, e você recebe um SMS pra confirmar a troca. Depois disso, o número é seu na nova linha, sem perder seus contatos.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Tem contrato de fidelidade ou multa de cancelamento?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+            <div class="faq-a">Não. Não existe fidelidade nem multa. Você pode trocar de plano ou cancelar quando quiser.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">O que é eSIM e como funciona?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+            <div class="faq-a">É um chip digital, sem a parte de plástico. Em vez de esperar o chip chegar pelo correio, você ativa na hora lendo um QR code pelo celular. Funciona em aparelhos compatíveis com eSIM (a maioria dos modelos lançados nos últimos anos).</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Como recebo o chip?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+            <div class="faq-a">Você escolhe: o chip físico é enviado pro seu endereço ou você ativa o eSIM na hora, sem espera.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">WhatsApp e iFood ilimitados consomem minha internet?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+            <div class="faq-a">Não. O uso desses apps não desconta da sua franquia de internet. Mesmo que seus dados do mês acabem, você continua usando WhatsApp e iFood normalmente.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">As ligações são ilimitadas mesmo?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+            <div class="faq-a">Sim. Ligações para qualquer número do Brasil (fixo ou celular) são ilimitadas, sem se preocupar com minutos.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">E se a internet do meu plano acabar?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+            <div class="faq-a">Os apps inclusos (como WhatsApp e iFood) continuam funcionando. Se precisar de mais internet, dá pra ajustar o plano direto pelo app, quando quiser.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q">Como acompanho meu consumo e gerencio a linha?<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"/></svg></div>
+            <div class="faq-a">Tudo pelo app: consumo em tempo real, troca de plano, segunda via, ativação e suporte. Você tem controle total sem precisar ligar pra ninguém.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="disclaimer">Ao prosseguir, você concorda com os <a href="#">termos de uso</a> do produto.</div>
+    </div>
+  </div>
+
+  <!-- ====== SURVEY VIEW ====== -->
+  <div class="view view-survey" id="viewSurvey"></div>
+
+  <!-- ====== THANKS VIEW ====== -->
+  <div class="view view-thanks" id="viewThanks">
+    <div class="thanks-wrap">
+      <div class="thanks-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+      </div>
+      <h2>Valeu pela resposta!</h2>
+      <p>Sua opinião ajuda a gente a construir benefícios que fazem sentido pra você.</p>
+    </div>
+  </div>
+
+  <!-- Fixed bottom CTAs -->
+  <div class="cta-sheet" id="ctaSheet">
+    <button class="cta-primary" onclick="openSurvey('positive')">Quero saber mais</button>
+    <button class="cta-secondary" onclick="openSurvey('negative')">Não tenho interesse</button>
+  </div>
+
+  <!-- Fixed bottom submit (survey) -->
+  <div class="submit-sheet" id="submitSheet" style="display:none;">
+    <button id="submitBtn" disabled>Enviar resposta</button>
+  </div>
+
+</div>
+
+<script>
+  const VARIANT = 'whatsapp';
+
+  /* ============ IDENTIDADE DO USUÁRIO ============
+   * Estratégia em camadas (cai pra próxima se a anterior falhar):
+   *   1. Query param person_id (se app fizer templating)
+   *   2. Cookie aAccessToken (JWT injetado pelo app — funciona se hospedado em .ifood.com.br)
+   *   3. null
+   */
+  const URL_PARAMS = new URLSearchParams(window.location.search);
+  const _rawPersonId = URL_PARAMS.get('person_id');
+  const PERSON_ID_FROM_QUERY = (_rawPersonId && !_rawPersonId.includes('{{')) ? _rawPersonId : null;
+
+  function getCookie(name){
+    const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+    return m ? decodeURIComponent(m[1]) : null;
+  }
+
+  function decodeJwtPayload(jwt){
+    try{
+      const parts = jwt.split('.');
+      if(parts.length !== 3) return null;
+      let payload = parts[1].replace(/-/g,'+').replace(/_/g,'/');
+      while(payload.length % 4) payload += '=';
+      return JSON.parse(atob(payload));
+    }catch(e){ return null; }
+  }
+
+  const ACCESS_TOKEN = getCookie('aAccessToken');
+  const JWT_CLAIMS = ACCESS_TOKEN ? decodeJwtPayload(ACCESS_TOKEN) : null;
+  // Tenta várias claim names comuns
+  const PERSON_ID_FROM_JWT = JWT_CLAIMS
+    ? (JWT_CLAIMS.personId || JWT_CLAIMS.person_id || JWT_CLAIMS.sub || JWT_CLAIMS.userId || JWT_CLAIMS.user_id || null)
+    : null;
+
+  const PERSON_ID = PERSON_ID_FROM_QUERY || PERSON_ID_FROM_JWT || null;
+  const PERSON_ID_SOURCE = PERSON_ID_FROM_QUERY ? 'querystring' : (PERSON_ID_FROM_JWT ? 'jwt cookie' : 'none');
+  const PERSON_ID_RAW = _rawPersonId;
+
+  /* ============ SESSION UUID (fallback de identidade) ============
+   * Gerado uma vez por dispositivo, persiste em localStorage. Útil pra contar
+   * impressões/cliques únicos sem precisar do personId real.
+   */
+  function generateUuid(){
+    if(crypto && crypto.randomUUID) return crypto.randomUUID();
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c=>{
+      const r = Math.random()*16|0; return (c==='x' ? r : (r&0x3|0x8)).toString(16);
+    });
+  }
+  function getOrCreateSessionUuid(){
+    try{
+      const key = 'ifood_discovery_uuid';
+      let id = localStorage.getItem(key);
+      if(!id){ id = generateUuid(); localStorage.setItem(key, id); }
+      return id;
+    }catch(e){
+      // localStorage pode estar bloqueado em alguns WebViews
+      return generateUuid();
+    }
+  }
+  const SESSION_UUID = getOrCreateSessionUuid();
+
+  /* ============ AMPLITUDE HTTP API ============
+   * Dispara eventos pro mesmo projeto Amplitude que o app usa.
+   * Permite correlação temporal (post-hoc) entre banner_click (com personId)
+   * e lp_* (com session_uuid).
+   * Preencha AMPLITUDE_API_KEY com a chave do projeto.
+   */
+  const AMPLITUDE_API_KEY = ''; // <- preencher
+
+  function trackAmplitude(eventType, eventProperties){
+    if(!AMPLITUDE_API_KEY) return;
+    const payload = {
+      api_key: AMPLITUDE_API_KEY,
+      events: [{
+        user_id: PERSON_ID || SESSION_UUID,
+        device_id: SESSION_UUID,
+        event_type: eventType,
+        event_properties: Object.assign({
+          variant: VARIANT,
+          session_uuid: SESSION_UUID,
+          person_id: PERSON_ID,
+          person_id_source: PERSON_ID_SOURCE,
+          platform: IS_ANDROID ? 'android' : 'ios_or_other',
+          page_url: window.location.href,
+          referrer: document.referrer || null,
+        }, eventProperties || {}),
+        user_properties: {
+          session_uuid: SESSION_UUID,
+          ...(PERSON_ID ? {person_id: PERSON_ID} : {})
+        },
+        time: Date.now()
+      }]
+    };
+    try{
+      fetch('https://api2.amplitude.com/2/httpapi', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(payload),
+        keepalive: true // garante envio mesmo se a página for fechada
+      });
+    }catch(e){}
+  }
+
+  /* ============ ADDRESS DATA (via canal FetchInitialAddressData) ============
+   * Tenta pegar endereço pra enriquecer attribution. Resposta vem via window.postMessage.
+   */
+  let ADDRESS_DATA = null;
+  function fetchAddressData(){
+    if(!window.FetchInitialAddressData || typeof window.FetchInitialAddressData.postMessage !== 'function') return;
+    const requestId = 'lp_' + Date.now();
+    window.addEventListener('message', function handler(ev){
+      try{
+        const data = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data;
+        if(data?.content?.request_id === requestId){
+          ADDRESS_DATA = data.content.data || null;
+          window.removeEventListener('message', handler);
+          sendNative('address_received', {address: ADDRESS_DATA});
+        }
+      }catch(e){}
+    });
+    try{
+      window.FetchInitialAddressData.postMessage(JSON.stringify({
+        content: { request_id: requestId }
+      }));
+    }catch(e){}
+  }
+
+  /* ============ NATIVE BRIDGE ============ */
+  function sendNative(action, data){
+    const payload = {
+      action, variant:VARIANT,
+      personId:PERSON_ID,
+      sessionUuid:SESSION_UUID,
+      data:data||{}
+    };
+    try{
+      if(window.webkit?.messageHandlers?.app) window.webkit.messageHandlers.app.postMessage(payload);
+      else if(window.AndroidApp?.onEvent) window.AndroidApp.onEvent(JSON.stringify(payload));
+      else if(window.ReactNativeWebView?.postMessage) window.ReactNativeWebView.postMessage(JSON.stringify(payload));
+    }catch(e){}
+  }
+
+  // page_view + tenta enriquecer com endereço + dispara pro Amplitude
+  window.addEventListener('load', ()=>{
+    sendNative('page_view');
+    trackAmplitude('lp_page_view', {});
+    fetchAddressData();
+  });
+
+  // iOS WKWebView roteia custom schemes nativamente.
+  // Android WebView desta build rejeita todos os schemes non-http — sem bridge
+  // nativa, dependemos apenas do postMessage. Usuário usa back do sistema.
+  const IS_ANDROID = /Android/i.test(navigator.userAgent);
+  if(IS_ANDROID) document.body.classList.add('is-android');
+  const HOME_DEEPLINK_IOS = 'ifoodbenefits://inapp/home';
+
+  // Detecta canais Flutter expostos pelo WebView do app.
+  // Lista vem de web_view_tab_page.dart (_registerJavascriptChannels).
+  const FLUTTER_CHANNELS = [
+    'OnClose','RedirectToRoute','RedirectToDeepLinkInternal','RedirectToDeepLinkExternal',
+    'RedirectToWeb','SetCookieValue','RemoveCookieValue','RemoveAllCookies',
+    'FetchInitialAddressData','FetchDataByZipCode','UpdateAccountData'
+  ];
+  const AVAILABLE_CHANNELS = FLUTTER_CHANNELS.filter(n =>
+    window[n] && typeof window[n].postMessage === 'function'
+  );
+
+  function callChannel(name, msg){
+    try{
+      if(window[name] && typeof window[name].postMessage === 'function'){
+        window[name].postMessage(typeof msg === 'string' ? msg : JSON.stringify(msg));
+        return true;
+      }
+    }catch(e){}
+    return false;
+  }
+
+  function goHome(){
+    sendNative('close');
+    // Caminho 1: fecha via canal OnClose (Flutter — qualquer plataforma)
+    if(callChannel('OnClose', 'close')) return;
+    // Caminho 2: deeplink (só funciona em iOS WKWebView pra esta build)
+    if(!IS_ANDROID){
+      try{ window.location.href = HOME_DEEPLINK_IOS; }catch(e){}
+    }
+  }
+  function onBack(){ goHome(); }
+  function onHelp(){ sendNative('help'); }
+
+  // Esconde botão voltar SÓ se nenhum canal de fechar estiver disponível e
+  // estivermos no Android (iOS funciona via deeplink).
+  if(IS_ANDROID && !AVAILABLE_CHANNELS.includes('OnClose')){
+    // já tem CSS body.is-android escondendo
+  } else {
+    // se OnClose existe, removemos o esconder no Android
+    document.body.classList.remove('is-android');
+  }
+
+  /* ============ FAQ ============ */
+  document.querySelectorAll('#faq .faq-item').forEach(el=>{
+    el.querySelector('.faq-q').addEventListener('click',()=>el.classList.toggle('open'));
+  });
+
+  /* ============ ROUTING ============ */
+  function setView(id){
+    document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+    window.scrollTo(0,0);
+  }
+
+  /* ============ SURVEYS ============ */
+  const SURVEYS = {
+    positive: {
+      eyebrow:'Que bom!',
+      title:'A gente quer entender melhor',
+      sub:'Sua resposta ajuda a construir o produto certo pra você.',
+      q1:{label:'O que mais te chamou atenção nessa oferta?',options:[
+        'A economia que ela promete',
+        'A facilidade de ativar (chip/eSIM)',
+        'O fato de ser integrada ao iFood Benefícios',
+        'A flexibilidade (sem fidelidade)',
+        'O fato de ser um produto do iFood',
+        'Outro'
+      ]},
+      q2:{label:'Qual dor ou problema do seu dia a dia esse produto resolve?',
+          placeholder:'Conta pra gente em uma ou duas frases…'}
+    },
+    negative: {
+      eyebrow:'Tudo bem',
+      title:'A gente quer entender o que faltou',
+      sub:'Sua resposta nos ajuda a melhorar a oferta.',
+      q1:{label:'O que você achou da oferta?',options:[
+        'Não vejo valor real pra mim',
+        'O preço está alto',
+        'Não acredito que vai funcionar bem',
+        'Já tenho um plano do qual gosto',
+        'A comunicação não ficou clara',
+        'Outro'
+      ]},
+      q2:{label:'O que poderíamos mudar pra você ter interesse?',
+          placeholder:'Conta pra gente em uma ou duas frases…'}
+    }
+  };
+
+  function openSurvey(type){
+    trackAmplitude('lp_cta_click', {cta_type: type});
+    const s = SURVEYS[type];
+    const opts = s.q1.options.map(o=>`
+      <label class="opt"><input type="radio" name="q1" value="${o}"/><span class="check"></span>${o}</label>
+    `).join('');
+    document.getElementById('viewSurvey').innerHTML = `
+      <div class="survey-head">
+        <button class="survey-close" onclick="onBack()" aria-label="Fechar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg></button>
+        <div style="font-size:13px;color:var(--text-secondary);font-weight:500;">Pesquisa rápida</div>
+        <div style="width:38px;"></div>
+      </div>
+      <div class="survey-progress"><div class="bar" id="progBar"></div></div>
+      <div class="survey-body">
+        <div class="survey-eyebrow">${s.eyebrow}</div>
+        <h2>${s.title}</h2>
+        <p class="sub">${s.sub}</p>
+        <div class="q-block">
+          <div class="q-label">${s.q1.label}</div>
+          <div class="options">${opts}</div>
+        </div>
+        <div class="q-block">
+          <div class="q-label">${s.q2.label}</div>
+          <textarea class="textarea" id="q2text" placeholder="${s.q2.placeholder}"></textarea>
+        </div>
+      </div>
+    `;
+    document.querySelectorAll('#viewSurvey .opt').forEach(o=>{
+      o.addEventListener('click',()=>{
+        document.querySelectorAll('#viewSurvey .opt').forEach(x=>x.classList.remove('selected'));
+        o.classList.add('selected');
+        o.querySelector('input').checked = true;
+        validate();
+      });
+    });
+    document.getElementById('q2text').addEventListener('input', validate);
+
+    document.getElementById('ctaSheet').style.display = 'none';
+    document.getElementById('submitSheet').style.display = 'block';
+    document.getElementById('submitBtn').disabled = true;
+    document.getElementById('submitBtn').onclick = ()=>submit(type);
+
+    setView('viewSurvey');
+  }
+
+  function validate(){
+    const sel = document.querySelector('#viewSurvey .opt.selected');
+    const txt = document.getElementById('q2text').value.trim();
+    document.getElementById('submitBtn').disabled = !(sel && txt.length>3);
+    document.getElementById('progBar').style.width = (sel?50:0) + (txt.length>3?50:0) + '%';
+  }
+
+  function submit(type){
+    const sel = document.querySelector('#viewSurvey .opt.selected input');
+    const txt = document.getElementById('q2text').value.trim();
+    sendNative('survey_submit', {type, q1:sel?.value, q2:txt});
+    trackAmplitude('lp_survey_submit', {survey_type: type, q1: sel?.value, q2: txt});
+    document.getElementById('submitSheet').style.display = 'none';
+    setView('viewThanks');
+    setTimeout(()=>onBack(), 1800);
+  }
+</script>
+
+</body>
+</html>
