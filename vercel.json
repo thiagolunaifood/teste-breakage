@@ -2,8 +2,12 @@
   "cleanUrls": true,
   "trailingSlash": false,
   "rewrites": [
-    { "source": "/breakage", "destination": "/breakage.html" },
-    { "source": "/sucesso",  "destination": "/sucesso.html"  }
+    { "source": "/breakage-5",  "destination": "/breakage-5.html"  },
+    { "source": "/breakage-10", "destination": "/breakage-10.html" },
+    { "source": "/breakage-15", "destination": "/breakage-15.html" },
+    { "source": "/breakage-20", "destination": "/breakage-20.html" },
+    { "source": "/breakage-25", "destination": "/breakage-25.html" },
+    { "source": "/sucesso",     "destination": "/sucesso.html"     }
   ],
   "headers": [
     {

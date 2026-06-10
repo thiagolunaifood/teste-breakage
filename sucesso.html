@@ -7,7 +7,7 @@
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <title>iFood Benefícios — Presente liberado</title>
-  <meta name="description" content="Seu presente de R$ 35 foi liberado. Escolha onde usar no iFood." />
+  <meta name="description" content="Seu presente foi liberado. Escolha onde usar no iFood." />
 
   <style>
     /* ==================== TIPOGRAFIA TIPO IFOOD ==================== */
@@ -298,7 +298,7 @@
       </div>
 
       <div class="page-header">
-        <h1 class="header-title">Presente de R$ 35 liberado!</h1>
+        <h1 class="header-title" id="headerTitle">Presente liberado!</h1>
         <p class="header-description">Seu valor já está disponível pra usar no 'Comer no iFood'. Escolha onde vai usar.</p>
       </div>
     </div>
@@ -378,6 +378,21 @@
     const URL_PARAMS = new URLSearchParams(window.location.search);
     const IS_ANDROID = /Android/i.test(navigator.userAgent);
     const DEBUG = URL_PARAMS.get('debug') === '1';
+
+    // ==================== VARIANTE (?valor=5|10|15|20|25) ====================
+    // Página compartilhada pelas 5 LPs de breakage. O valor chega via querystring
+    // (breakage-N.html navega pra /sucesso?valor=N). Aceita só valores conhecidos.
+    const ALLOWED_VALUES = [5, 10, 15, 20, 25];
+    const _rawValor = parseInt(URL_PARAMS.get('valor'), 10);
+    const INCENTIVE_VALUE = ALLOWED_VALUES.indexOf(_rawValor) >= 0 ? _rawValor : null;
+
+    // Renderiza o título com o valor (ou fallback genérico se faltar)
+    (function renderTitle() {
+      const el = document.getElementById('headerTitle');
+      if (el && INCENTIVE_VALUE) {
+        el.textContent = 'Presente de R$ ' + INCENTIVE_VALUE + ' liberado!';
+      }
+    })();
 
     // ==================== IDENTIDADE (espelha breakage.html) ====================
     const _rawPersonId = URL_PARAMS.get('person_id');
@@ -461,6 +476,7 @@
           event_properties: Object.assign({
             teste: 'breakage',
             variant: VARIANT,
+            incentive_value: INCENTIVE_VALUE,
             page: PAGE,
             session_uuid: SESSION_UUID,
             person_id: PERSON_ID,
@@ -530,6 +546,7 @@
         'referrer': document.referrer || '(nenhum)',
         '— Config —': '',
         'variant': VARIANT,
+        'incentive_value (?valor=)': INCENTIVE_VALUE,
         'page': PAGE,
         'amplitude_key': AMPLITUDE_API_KEY ? 'preenchida' : '(vazia — tracking no-op)',
         'DEEPLINKS': DEEPLINKS

@@ -1,0 +1,857 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#8f0340" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>iFood Benefícios — Presente de R$ 20</title>
+  <meta name="description" content="Receba um presente de R$ 20 para usar no iFood." />
+
+  <style>
+    /* ==================== TIPOGRAFIA TIPO IFOOD ==================== */
+    @font-face {
+      font-family: 'TipoiFood Titulos';
+      src: url('/fonts/TipoiFoodTitulos-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'TipoiFood Titulos';
+      src: url('/fonts/TipoiFoodTitulos-ExtraBold.woff2') format('woff2');
+      font-weight: 800;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'TipoiFood Textos';
+      src: url('/fonts/TipoiFoodTextos-Regular.woff2') format('woff2');
+      font-weight: 400;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'TipoiFood Textos';
+      src: url('/fonts/TipoiFoodTextos-Medium.woff2') format('woff2');
+      font-weight: 500;
+      font-display: swap;
+    }
+    @font-face {
+      font-family: 'TipoiFood Textos';
+      src: url('/fonts/TipoiFoodTextos-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-display: swap;
+    }
+
+    /* ==================== VARIÁVEIS ==================== */
+    :root {
+      --gradient-start: #8f0340;
+      --gradient-end:   #69022d;
+      --primary-color:  #a41d50;
+      --text-light:     #141414;
+      --text-secondary: #666666;
+      --border-light:   #ebebeb;
+      --bg-white:       #ffffff;
+      --bg-light:       #f5f5f5;
+
+      --sp-1: 4px;  --sp-2: 8px;  --sp-3: 12px; --sp-4: 16px;
+      --sp-5: 20px; --sp-6: 24px; --sp-7: 32px; --sp-8: 40px; --sp-9: 48px;
+
+      --font-family-body:    'TipoiFood Textos', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --font-family-display: 'TipoiFood Titulos', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+
+      --font-size-sm: 14px;
+      --font-size-base: 16px;
+      --font-size-lg: 20px;
+      --font-size-xl: 24px;
+      --line-height-tight: 1.2;
+      --line-height-normal: 1.5;
+    }
+
+    /* ==================== RESET ==================== */
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      font-family: var(--font-family-body);
+      background-color: var(--bg-white);
+      color: var(--text-light);
+      line-height: 1.5;
+      overflow-x: hidden;
+      font-feature-settings: "tnum" 0;
+    }
+
+    img { max-width: 100%; height: auto; display: block; }
+    button { font-family: inherit; }
+
+    /* ==================== APP FRAME (desktop preview) ==================== */
+    @media (min-width: 481px) {
+      body { background-color: #EFEFEF; }
+      .container {
+        max-width: 480px;
+        margin: 0 auto;
+        box-shadow: 0 0 24px rgba(0,0,0,0.08);
+        min-height: 100vh;
+      }
+    }
+
+    /* ==================== CONTAINER ==================== */
+    .container {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-color: var(--bg-white);
+      position: relative;
+    }
+
+    /* ==================== HEADER (Reward Card) ==================== */
+    .header {
+      width: 100%;
+      background: linear-gradient(180deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+      min-height: 275px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-4);
+      padding-top: calc(var(--sp-4) + env(safe-area-inset-top));
+      overflow: hidden;
+      position: relative;
+      animation: slideDown 0.5s ease-out;
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .reward-card-container {
+      width: 100%;
+      max-width: 100%;
+      aspect-ratio: 390 / 275;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .reward-card-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    /* ==================== CONTENT WRAPPER ==================== */
+    .content-wrapper {
+      display: flex;
+      flex-direction: column;
+      flex: 1;
+      width: 100%;
+      animation: slideUp 0.5s ease-out 0.2s both;
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ==================== CARD DETAILS ==================== */
+    .card-details {
+      background-color: #ffffff;
+      border-radius: 20px 20px 0 0;
+      padding: var(--sp-6) var(--sp-4) 200px var(--sp-4);
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-7);
+      flex: 1;
+      margin-top: -20px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* ==================== PAGE HEADER ==================== */
+    .page-header {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+    }
+
+    .page-header h1 {
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-lg);
+      font-weight: 800;
+      line-height: var(--line-height-tight);
+      color: var(--text-light);
+      letter-spacing: -0.02em;
+    }
+
+    .page-header p {
+      font-size: var(--font-size-sm);
+      font-weight: 400;
+      line-height: var(--line-height-normal);
+      color: var(--text-secondary);
+    }
+
+    /* ==================== INFO CARDS ==================== */
+    .info-container {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      border-radius: 8px;
+    }
+
+    .info-card {
+      display: flex;
+      gap: var(--sp-3);
+      align-items: center;
+      padding: var(--sp-4) var(--sp-3);
+      min-height: 44px;
+    }
+
+    .info-icon {
+      flex-shrink: 0;
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .info-icon svg {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .info-text {
+      flex: 1;
+      font-size: 13px;
+      font-weight: 400;
+      line-height: var(--line-height-normal);
+      color: var(--text-secondary);
+      letter-spacing: -0.01em;
+    }
+
+    .info-text strong {
+      font-weight: 700;
+      color: var(--text-light);
+    }
+
+    .divider {
+      height: 1px;
+      background-color: var(--border-light);
+      width: 100%;
+    }
+
+    /* ==================== FAQ ==================== */
+    .faq-section {
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-4);
+      padding: var(--sp-7) 0 var(--sp-4) 0;
+      border-top: 1px solid var(--border-light);
+    }
+
+    .faq-title {
+      font-family: var(--font-family-display);
+      font-size: 16px;
+      font-weight: 700;
+      line-height: var(--line-height-normal);
+      color: var(--text-light);
+      letter-spacing: -0.01em;
+    }
+
+    .accordion {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .accordion-item {
+      display: flex;
+      flex-direction: column;
+      border-bottom: 1px solid var(--border-light);
+    }
+
+    .accordion-button {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--sp-2);
+      padding: var(--sp-4) var(--sp-2);
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      font-family: var(--font-family-body);
+      font-size: var(--font-size-sm);
+      font-weight: 500;
+      line-height: var(--line-height-normal);
+      color: var(--text-light);
+      min-height: 44px;
+      transition: color 0.2s ease;
+      text-align: left;
+      width: 100%;
+    }
+
+    .accordion-button:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: -1px;
+    }
+
+    .accordion-button.expanded { color: var(--primary-color); }
+
+    .question-text { flex: 1; }
+
+    .chevron {
+      flex-shrink: 0;
+      width: 22px;
+      height: 22px;
+      color: var(--primary-color);
+      stroke: currentColor;
+      stroke-width: 2;
+      fill: none;
+      transition: transform 0.3s ease;
+    }
+
+    .accordion-button.expanded .chevron { transform: rotate(180deg); }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .accordion-content.expanded { opacity: 1; }
+
+    .answer-text {
+      padding: 0 var(--sp-2) var(--sp-4) var(--sp-2);
+      font-size: var(--font-size-sm);
+      font-weight: 400;
+      line-height: var(--line-height-normal);
+      color: var(--text-secondary);
+    }
+
+    /* ==================== CTA SECTION ==================== */
+    .cta-section {
+      background-color: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: var(--sp-2);
+      padding: var(--sp-5) var(--sp-4) calc(var(--sp-4) + env(safe-area-inset-bottom)) var(--sp-4);
+      border-top: 1px solid var(--border-light);
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      z-index: 100;
+      box-shadow: 0 -4px 12px rgba(0,0,0,0.04);
+    }
+
+    .expiration-text {
+      font-size: 13px;
+      font-weight: 500;
+      line-height: var(--line-height-normal);
+      color: var(--text-secondary);
+      text-align: center;
+      letter-spacing: -0.01em;
+    }
+
+    .expiration-text strong {
+      color: var(--primary-color);
+      font-weight: 700;
+    }
+
+    .primary-button {
+      width: 100%;
+      padding: var(--sp-4);
+      background: var(--primary-color);
+      color: #ffffff;
+      border: none;
+      border-radius: 8px;
+      font-family: var(--font-family-display);
+      font-size: var(--font-size-base);
+      font-weight: 700;
+      line-height: var(--line-height-tight);
+      cursor: pointer;
+      transition: transform 0.15s ease, opacity 0.2s ease, box-shadow 0.3s ease;
+      min-height: 48px;
+      letter-spacing: -0.01em;
+    }
+
+    .primary-button:hover {
+      box-shadow: 0 4px 12px rgba(164, 29, 80, 0.3);
+    }
+
+    .primary-button:active {
+      transform: scale(0.98);
+      opacity: 0.9;
+    }
+
+    .primary-button:focus-visible {
+      outline: 2px solid var(--primary-color);
+      outline-offset: 2px;
+    }
+
+    .primary-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    /* ==================== DEBUG MODAL ==================== */
+    .debug-modal {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 9999;
+      padding: 20px;
+      overflow-y: auto;
+    }
+    .debug-modal.open { display: block; }
+    .debug-modal-inner {
+      background: #fff;
+      max-width: 480px;
+      margin: 40px auto;
+      padding: 20px;
+      border-radius: 12px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+      font-size: 12px;
+    }
+    .debug-modal-inner h3 {
+      font-family: var(--font-family-display);
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    .debug-row { margin-bottom: 8px; word-break: break-all; }
+    .debug-row b { color: var(--primary-color); }
+    .debug-row.ok { color: #00BC72; }
+    .debug-row.warn { color: #c33; }
+    .debug-close {
+      background: var(--primary-color);
+      color: #fff; border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      margin-top: 12px;
+      font-family: inherit;
+    }
+    .debug-trigger {
+      position: fixed;
+      top: 8px; right: 8px;
+      background: rgba(0,0,0,0.5);
+      color: #fff;
+      border: none;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      font-size: 14px;
+      cursor: pointer;
+      z-index: 200;
+      display: none;
+    }
+    body.debug-mode .debug-trigger { display: block; }
+
+    /* ==================== A11Y ==================== */
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+
+    @media print {
+      .cta-section { position: static; }
+      .header { page-break-after: avoid; }
+      .debug-modal, .debug-trigger { display: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- ============ HERO (Reward Card) ============ -->
+    <div class="header">
+      <div class="reward-card-container">
+        <img
+          src="/reward-card-20.svg"
+          alt="Presente de R$ 20 no iFood com formas de pagamento e iFood Clube"
+          class="reward-card-image"
+        />
+      </div>
+    </div>
+
+    <!-- ============ MAIN ============ -->
+    <div class="content-wrapper">
+      <div class="card-details">
+        <div class="page-header">
+          <h1>Presente de R$ 20 pra usar no iFood!</h1>
+          <p>Combine seu presente com outro meio de pagamento, mais descontos do Clube pra pedir no iFood.</p>
+        </div>
+
+        <!-- ============ INFO CARDS ============ -->
+        <div class="info-container">
+          <div class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <svg viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="13.5" cy="13.5" r="13.5" fill="#B5004C"/>
+                <path d="M7.26562 10.1711L10.7188 10.2023L9.32812 8.46797C9.28646 8.41589 9.26562 8.35859 9.26562 8.29609C9.27604 8.22318 9.30729 8.16589 9.35938 8.12422L10.7188 7.03047C10.7708 6.9888 10.8281 6.97318 10.8906 6.98359C10.9531 6.98359 11.0104 7.00964 11.0625 7.06172L13.3438 9.88984L15.6406 7.06172C15.6823 7.00964 15.7344 6.98359 15.7969 6.98359C15.8594 6.97318 15.9167 6.9888 15.9688 7.03047L17.3281 8.12422C17.3802 8.16589 17.4062 8.22318 17.4062 8.29609C17.4167 8.35859 17.401 8.41589 17.3594 8.46797L15.9375 10.218L19.2344 10.2492C19.401 10.2492 19.5417 10.3117 19.6562 10.4367C19.7708 10.5513 19.8333 10.6919 19.8438 10.8586V12.4211C19.8438 12.5878 19.7865 12.7284 19.6719 12.843C19.5573 12.9576 19.4167 13.0148 19.25 13.0148L7.28125 12.9523C7.11458 12.9523 6.96875 12.8951 6.84375 12.7805C6.72917 12.6555 6.67188 12.5096 6.67188 12.343L6.65625 10.7805C6.65625 10.6138 6.71354 10.4732 6.82812 10.3586C6.95312 10.2336 7.09896 10.1711 7.26562 10.1711ZM18.7812 14.3273V19.0773C18.7812 19.4107 18.6615 19.6971 18.4219 19.9367C18.1927 20.1659 17.9115 20.2805 17.5781 20.2805H14V14.3273H18.7812ZM12.625 14.3273V20.2805H9.09375C8.76042 20.2805 8.47396 20.1659 8.23438 19.9367C7.99479 19.6971 7.875 19.4107 7.875 19.0773V14.3273H12.625Z" fill="white"/>
+              </svg>
+            </div>
+            <p class="info-text">
+              Ao seguir com <strong>'Quero meu presente'</strong>, você vai receber agora o valor de R$ 20 no <strong>'Comer no iFood'</strong>.
+            </p>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <svg viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="13.5" cy="13.5" r="13.5" fill="#B5004C"/>
+                <path d="M19.6719 8C19.6719 7.63542 19.5417 7.32292 19.2812 7.0625C19.0208 6.80208 18.7031 6.67188 18.3281 6.67188H13.6719C13.2969 6.67188 12.9792 6.80208 12.7188 7.0625C12.4583 7.32292 12.3281 7.63542 12.3281 8V11.3281C12.3281 11.7031 12.4583 12.0208 12.7188 12.2812C12.9792 12.5417 13.2969 12.6719 13.6719 12.6719H18.3281C18.7031 12.6719 19.0208 12.5417 19.2812 12.2812C19.5417 12.0208 19.6719 11.7031 19.6719 11.3281V8ZM18.3281 8V11.3281H13.6719V8H18.3281ZM12.3281 14C12.7031 14 13.0208 14.1302 13.2812 14.3906C13.5417 14.651 13.6719 14.9635 13.6719 15.3281V18.6719C13.6719 19.0365 13.5417 19.349 13.2812 19.6094C13.0208 19.8698 12.7031 20 12.3281 20H7.67188C7.29688 20 6.97917 19.8698 6.71875 19.6094C6.45833 19.349 6.32812 19.0365 6.32812 18.6719V15.3281C6.32812 14.9635 6.45833 14.651 6.71875 14.3906C6.97917 14.1302 7.29688 14 7.67188 14H12.3281ZM7.07812 10.0781C7.07812 9.98438 7.10938 9.90625 7.17188 9.84375C7.24479 9.78125 7.32812 9.75 7.42188 9.75H7.92188C8.01562 9.75 8.09375 9.78125 8.15625 9.84375C8.21875 9.90625 8.25 9.98438 8.25 10.0781V10.5938L10.3594 8.48438C10.4219 8.42188 10.4948 8.39062 10.5781 8.39062C10.6719 8.39062 10.7552 8.42188 10.8281 8.48438L11.1719 8.84375C11.2448 8.90625 11.2812 8.98438 11.2812 9.07812C11.2812 9.17188 11.2448 9.25 11.1719 9.3125L9.07812 11.4219H9.54688C9.63021 11.4219 9.70312 11.4531 9.76562 11.5156C9.83854 11.5781 9.875 11.6562 9.875 11.75V12.25C9.875 12.3438 9.83854 12.4219 9.76562 12.4844C9.70312 12.5469 9.63021 12.5781 9.54688 12.5781H7.42188C7.32812 12.5781 7.24479 12.5469 7.17188 12.4844C7.10938 12.4219 7.07812 12.3438 7.07812 12.25V10.0781ZM18.9219 16.5938C18.9219 16.6875 18.8854 16.7656 18.8125 16.8281C18.75 16.8906 18.6719 16.9219 18.5781 16.9219H18.0781C17.9844 16.9219 17.9062 16.8906 17.8438 16.8281C17.7812 16.7656 17.75 16.6875 17.75 16.5938V16.0781L15.6406 18.1719C15.5781 18.2448 15.5 18.2812 15.4062 18.2812C15.3229 18.2812 15.2448 18.2448 15.1719 18.1719L14.8281 17.8281C14.7552 17.7552 14.7188 17.6771 14.7188 17.5938C14.7188 17.5 14.7552 17.4219 14.8281 17.3594L16.9219 15.25H16.4531C16.3698 15.25 16.2917 15.2188 16.2188 15.1562C16.1562 15.0938 16.125 15.0156 16.125 14.9219V14.4219C16.125 14.3281 16.1562 14.25 16.2188 14.1875C16.2917 14.1146 16.3698 14.0781 16.4531 14.0781H18.5781C18.6719 14.0781 18.75 14.1146 18.8125 14.1875C18.8854 14.25 18.9219 14.3281 18.9219 14.4219V16.5938Z" fill="white"/>
+              </svg>
+            </div>
+            <p class="info-text">
+              Pague seu pedido <strong>combinando o valor do presente</strong> no 'Comer no iFood' com outro método de pagamento: <strong>Pix, Crédito ou Débito</strong>.
+            </p>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="info-card">
+            <div class="info-icon" aria-hidden="true">
+              <svg viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="13.5" cy="13.5" r="13.5" fill="#B5004C"/>
+                <path d="M6.53125 10.6719V12.3281H19.4688V10.6719C19.4688 10.1719 19.2917 9.74479 18.9375 9.39062C18.5833 9.03646 18.1615 8.85938 17.6719 8.85938H8.32812C7.83854 8.85938 7.41667 9.03646 7.0625 9.39062C6.70833 9.74479 6.53125 10.1719 6.53125 10.6719ZM6.53125 13.6719H19.4688V19C19.4688 19.5 19.2917 19.9271 18.9375 20.2812C18.5833 20.625 18.1615 20.7969 17.6719 20.7969H8.32812C7.83854 20.7969 7.41667 20.625 7.0625 20.2812C6.70833 19.9271 6.53125 19.5 6.53125 19V13.6719ZM8.79688 17.9531C8.79688 18.099 8.84896 18.224 8.95312 18.3281C9.05729 18.4323 9.18229 18.4844 9.32812 18.4844H14.6719C14.8177 18.4844 14.9427 18.4323 15.0469 18.3281C15.151 18.224 15.2031 18.099 15.2031 17.9531C15.2031 17.8073 15.151 17.6823 15.0469 17.5781C14.9427 17.474 14.8177 17.4219 14.6719 17.4219H9.32812C9.18229 17.4219 9.05729 17.474 8.95312 17.5781C8.84896 17.6823 8.79688 17.8073 8.79688 17.9531ZM9.32812 16.5312H12C12.1458 16.5312 12.2708 16.4792 12.375 16.375C12.4792 16.2708 12.5312 16.1458 12.5312 16C12.5312 15.8542 12.4792 15.7292 12.375 15.625C12.2708 15.5208 12.1458 15.4688 12 15.4688H9.32812C9.18229 15.4688 9.05729 15.5208 8.95312 15.625C8.84896 15.7292 8.79688 15.8542 8.79688 16C8.79688 16.1458 8.84896 16.2708 8.95312 16.375C9.05729 16.4792 9.18229 16.5312 9.32812 16.5312ZM16 7.67188C16.1875 7.67188 16.3438 7.73958 16.4688 7.875C16.6042 8 16.6719 8.15104 16.6719 8.32812V10.1719C16.6719 10.3594 16.6042 10.5208 16.4688 10.6562C16.3438 10.7812 16.1875 10.8438 16 10.8438C15.8125 10.8438 15.651 10.7812 15.5156 10.6562C15.3906 10.5208 15.3281 10.3594 15.3281 10.1719V8.32812C15.3281 8.15104 15.3906 8 15.5156 7.875C15.651 7.73958 15.8125 7.67188 16 7.67188ZM10 7.67188C10.1875 7.67188 10.3438 7.73958 10.4688 7.875C10.6042 8 10.6719 8.15104 10.6719 8.32812V10.1719C10.6719 10.3594 10.6042 10.5208 10.4688 10.6562C10.3438 10.7812 10.1875 10.8438 10 10.8438C9.8125 10.8438 9.65104 10.7812 9.51562 10.6562C9.39062 10.5208 9.32812 10.3594 9.32812 10.1719V8.32812C9.32812 8.15104 9.39062 8 9.51562 7.875C9.65104 7.73958 9.8125 7.67188 10 7.67188Z" fill="white"/>
+              </svg>
+            </div>
+            <p class="info-text">
+              <strong>Oferta gratuita e por tempo limitado.</strong>
+            </p>
+          </div>
+        </div>
+
+        <!-- ============ FAQ ============ -->
+        <div class="faq-section">
+          <h2 class="faq-title">Dúvidas frequentes</h2>
+
+          <div class="accordion">
+            <div class="accordion-item">
+              <button class="accordion-button" aria-expanded="false" aria-controls="acc-1">
+                <span class="question-text">Como usar meu presente?</span>
+                <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="acc-1" class="accordion-content">
+                <p class="answer-text">Você pode usar seu presente de R$ 20 no iFood para pagar parte ou todo seu pedido, combinando com outro método de pagamento se necessário.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-button" aria-expanded="false" aria-controls="acc-2">
+                <span class="question-text">Posso transferir para outra pessoa?</span>
+                <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="acc-2" class="accordion-content">
+                <p class="answer-text">O presente é vinculado à sua conta iFood e não pode ser transferido para outro usuário.</p>
+              </div>
+            </div>
+
+            <div class="accordion-item">
+              <button class="accordion-button" aria-expanded="false" aria-controls="acc-3">
+                <span class="question-text">Há restrições de restaurantes?</span>
+                <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"></polyline></svg>
+              </button>
+              <div id="acc-3" class="accordion-content">
+                <p class="answer-text">O presente funciona em qualquer restaurante parceiro do iFood que está disponível na sua região.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ============ CTA FIXO ============ -->
+    <div class="cta-section">
+      <p class="expiration-text">Seu presente expira após <strong>4 dias</strong>, aproveite!</p>
+      <button class="primary-button" id="ctaPrimary" type="button">Quero meu presente</button>
+    </div>
+
+    <!-- ============ DEBUG TRIGGER ============ -->
+    <button class="debug-trigger" id="debugTrigger" aria-label="Abrir debug">i</button>
+
+    <!-- ============ DEBUG MODAL ============ -->
+    <div class="debug-modal" id="debugModal" role="dialog" aria-modal="true" aria-labelledby="debugTitle">
+      <div class="debug-modal-inner">
+        <h3 id="debugTitle">Debug — iFood Benefícios LP</h3>
+        <div id="debugBody"></div>
+        <button class="debug-close" id="debugClose">Fechar</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== CONSTANTES ====================
+    const VARIANT = 'breakage';
+    // INCENTIVE_VALUE define o valor (R$) desta variante. Trocar nesse único ponto
+    // ao gerar uma nova variante (ex.: 5, 10, 15, 20, 25).
+    const INCENTIVE_VALUE = 20;
+    const AMPLITUDE_API_KEY = '70c4aa9143716ab2bb6a43ebbaf81bf3';
+
+    // ==================== URL / PLATAFORMA ====================
+    const URL_PARAMS = new URLSearchParams(window.location.search);
+    const IS_ANDROID = /Android/i.test(navigator.userAgent);
+    const HOME_DEEPLINK_IOS = 'ifoodbenefits://inapp/home';
+
+    // ==================== IDENTIDADE ====================
+    // 1. person_id via querystring
+    const _rawPersonId = URL_PARAMS.get('person_id');
+    const PERSON_ID_FROM_QUERY = (_rawPersonId && !_rawPersonId.includes('{{')) ? _rawPersonId : null;
+
+    // 2. person_id via JWT do cookie aAccessToken
+    function getCookie(name) {
+      const m = document.cookie.match(new RegExp('(?:^|; )' + name + '=([^;]*)'));
+      return m ? decodeURIComponent(m[1]) : null;
+    }
+    function decodeJwtPayload(jwt) {
+      try {
+        const parts = jwt.split('.');
+        if (parts.length !== 3) return null;
+        let payload = parts[1].replace(/-/g, '+').replace(/_/g, '/');
+        while (payload.length % 4) payload += '=';
+        return JSON.parse(atob(payload));
+      } catch (e) { return null; }
+    }
+    const ACCESS_TOKEN = getCookie('aAccessToken');
+    const JWT_CLAIMS = ACCESS_TOKEN ? decodeJwtPayload(ACCESS_TOKEN) : null;
+    const PERSON_ID_FROM_JWT = JWT_CLAIMS
+      ? (JWT_CLAIMS.personId || JWT_CLAIMS.person_id || JWT_CLAIMS.sub || JWT_CLAIMS.userId || null)
+      : null;
+
+    const PERSON_ID = PERSON_ID_FROM_QUERY || PERSON_ID_FROM_JWT || null;
+    const PERSON_ID_SOURCE = PERSON_ID_FROM_QUERY ? 'querystring'
+                           : PERSON_ID_FROM_JWT ? 'jwt cookie'
+                           : 'none';
+
+    // 3. session UUID (fallback principal)
+    function generateUuid() {
+      if (window.crypto && crypto.randomUUID) return crypto.randomUUID();
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, c => {
+        const r = Math.random() * 16 | 0;
+        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
+      });
+    }
+    function getOrCreateSessionUuid() {
+      try {
+        const key = 'ifood_discovery_uuid';
+        let id = localStorage.getItem(key);
+        if (!id) { id = generateUuid(); localStorage.setItem(key, id); }
+        return id;
+      } catch (e) { return generateUuid(); }
+    }
+    const SESSION_UUID = getOrCreateSessionUuid();
+
+    // ==================== BRIDGE NATIVA ====================
+    const FLUTTER_CHANNELS = [
+      'OnClose', 'RedirectToRoute', 'RedirectToDeepLinkInternal',
+      'RedirectToDeepLinkExternal', 'RedirectToWeb',
+      'SetCookieValue', 'RemoveCookieValue', 'RemoveAllCookies',
+      'FetchInitialAddressData', 'FetchDataByZipCode', 'UpdateAccountData'
+    ];
+    const AVAILABLE_CHANNELS = FLUTTER_CHANNELS.filter(n =>
+      window[n] && typeof window[n].postMessage === 'function'
+    );
+
+    function callChannel(name, msg) {
+      try {
+        if (window[name] && typeof window[name].postMessage === 'function') {
+          window[name].postMessage(typeof msg === 'string' ? msg : JSON.stringify(msg));
+          return true;
+        }
+      } catch (e) {}
+      return false;
+    }
+
+    function sendNative(action, payload) {
+      // Hook genérico para logs (Flutter pode interceptar mensagens de console)
+      try { console.log('[native]', action, payload || ''); } catch (e) {}
+    }
+
+    // Endereço (opcional, sem bloquear a UI)
+    let ADDRESS_DATA = null;
+    function fetchAddressData() {
+      if (!window.FetchInitialAddressData || typeof window.FetchInitialAddressData.postMessage !== 'function') return;
+      const requestId = 'lp_' + Date.now();
+      window.addEventListener('message', function handler(ev) {
+        try {
+          const data = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data;
+          if (data && data.content && data.content.request_id === requestId) {
+            ADDRESS_DATA = data.content.data || null;
+            window.removeEventListener('message', handler);
+          }
+        } catch (e) {}
+      });
+      try {
+        window.FetchInitialAddressData.postMessage(JSON.stringify({
+          content: { request_id: requestId }
+        }));
+      } catch (e) {}
+    }
+    fetchAddressData();
+
+    // ==================== TRACKING (Amplitude HTTP API) ====================
+    function trackAmplitude(eventType, eventProperties) {
+      if (!AMPLITUDE_API_KEY) return;
+      const payload = {
+        api_key: AMPLITUDE_API_KEY,
+        events: [{
+          user_id: PERSON_ID || SESSION_UUID,
+          device_id: SESSION_UUID,
+          event_type: eventType,
+          event_properties: Object.assign({
+            teste: 'breakage',
+            variant: VARIANT,
+            incentive_value: INCENTIVE_VALUE,
+            session_uuid: SESSION_UUID,
+            person_id: PERSON_ID,
+            person_id_source: PERSON_ID_SOURCE,
+            platform: IS_ANDROID ? 'android' : 'ios_or_other',
+            page_url: window.location.href,
+            referrer: document.referrer || null
+          }, eventProperties || {}),
+          user_properties: Object.assign(
+            { session_uuid: SESSION_UUID },
+            PERSON_ID ? { person_id: PERSON_ID } : {}
+          ),
+          time: Date.now()
+        }]
+      };
+      try {
+        fetch('https://api2.amplitude.com/2/httpapi', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+          keepalive: true
+        });
+      } catch (e) {}
+    }
+
+    // ==================== CTA ====================
+    function onCtaPrimary() {
+      trackAmplitude('lp_cta_click', { cta_type: 'positive', cta_label: 'Quero meu presente' });
+      sendNative('cta_primary');
+      // Navega pra próxima página dentro da mesma WebView (URL limpa via vercel.json)
+      // Propaga o valor da variante pra sucesso.html (página compartilhada entre todas)
+      window.location.href = '/sucesso?valor=' + INCENTIVE_VALUE;
+    }
+
+    // ==================== ACCORDION ====================
+    function initAccordion() {
+      const buttons = document.querySelectorAll('.accordion-button');
+      buttons.forEach((button) => {
+        button.addEventListener('click', () => {
+          const isExpanded = button.getAttribute('aria-expanded') === 'true';
+          const contentId = button.getAttribute('aria-controls');
+          const content = document.getElementById(contentId);
+
+          // Fecha todos os outros
+          buttons.forEach((other) => {
+            if (other !== button) {
+              other.setAttribute('aria-expanded', 'false');
+              other.classList.remove('expanded');
+              const otherContent = document.getElementById(other.getAttribute('aria-controls'));
+              if (otherContent) {
+                otherContent.classList.remove('expanded');
+                otherContent.style.maxHeight = '0';
+              }
+            }
+          });
+
+          // Toggle atual
+          button.setAttribute('aria-expanded', String(!isExpanded));
+          button.classList.toggle('expanded');
+          content.classList.toggle('expanded');
+
+          if (!isExpanded && content.firstElementChild) {
+            content.style.maxHeight = content.firstElementChild.offsetHeight + 32 + 'px';
+            trackAmplitude('lp_faq_open', { question: button.querySelector('.question-text').textContent });
+          } else {
+            content.style.maxHeight = '0';
+          }
+        });
+      });
+
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          buttons.forEach((b) => {
+            b.setAttribute('aria-expanded', 'false');
+            b.classList.remove('expanded');
+            const c = document.getElementById(b.getAttribute('aria-controls'));
+            if (c) { c.classList.remove('expanded'); c.style.maxHeight = '0'; }
+          });
+        }
+      });
+    }
+
+    // ==================== DEBUG MODAL ====================
+    const DEBUG_MODE = URL_PARAMS.get('debug') === '1';
+
+    function populateDebug() {
+      const cookies = document.cookie ? document.cookie.split('; ').map(c => c.split('=')[0]) : [];
+      const queryAll = {};
+      URL_PARAMS.forEach((v, k) => { queryAll[k] = v; });
+
+      const rows = [
+        { label: 'person_id (final)',     value: PERSON_ID || 'null', ok: !!PERSON_ID },
+        { label: 'person_id (fonte)',     value: PERSON_ID_SOURCE },
+        { label: 'session_uuid',          value: SESSION_UUID },
+        { label: 'JWT claims',            value: JWT_CLAIMS ? JSON.stringify(JWT_CLAIMS) : 'null' },
+        { label: 'Cookies disponíveis',   value: cookies.length ? cookies.join(', ') : '(nenhum)' },
+        { label: 'Canais Flutter',        value: AVAILABLE_CHANNELS.length ? AVAILABLE_CHANNELS.join(', ') : '(nenhum)' },
+        { label: 'Endereço',              value: ADDRESS_DATA ? JSON.stringify(ADDRESS_DATA) : 'pendente/null' },
+        { label: 'Query params',          value: JSON.stringify(queryAll) },
+        { label: 'URL completa',          value: window.location.href },
+        { label: 'Plataforma',            value: IS_ANDROID ? 'Android' : 'iOS/Outro' },
+        { label: 'Variant',               value: VARIANT },
+        { label: 'Amplitude key',         value: AMPLITUDE_API_KEY ? '(setada)' : '(vazia — no-op)' }
+      ];
+
+      const body = document.getElementById('debugBody');
+      body.innerHTML = rows.map(r =>
+        '<div class="debug-row ' + (r.ok === true ? 'ok' : r.ok === false ? 'warn' : '') + '">' +
+        '<b>' + r.label + ':</b> ' + (r.value || '') + '</div>'
+      ).join('');
+    }
+
+    function showDebug() {
+      populateDebug();
+      document.getElementById('debugModal').classList.add('open');
+    }
+    function hideDebug() {
+      document.getElementById('debugModal').classList.remove('open');
+    }
+
+    if (DEBUG_MODE) {
+      document.body.classList.add('debug-mode');
+      window.addEventListener('load', () => setTimeout(showDebug, 300));
+      document.getElementById('debugTrigger').addEventListener('click', showDebug);
+      document.getElementById('debugClose').addEventListener('click', hideDebug);
+    }
+
+    // ==================== INIT ====================
+    document.getElementById('ctaPrimary').addEventListener('click', onCtaPrimary);
+    initAccordion();
+
+    // Page view tracking
+    trackAmplitude('lp_page_view', { available_channels: AVAILABLE_CHANNELS });
+  </script>
+</body>
+</html>
