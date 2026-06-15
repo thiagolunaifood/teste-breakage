@@ -102,6 +102,21 @@ Pontos que mudam por variante (ao gerar manualmente):
 
 A copy do CTA e dos demais elementos é genérica (não menciona valor).
 
+### Data limite do saldo (contagem regressiva)
+
+A mensagem de expiração é calculada dinamicamente com base na constante `EXPIRATION_DATE`:
+
+```js
+const EXPIRATION_DATE = new Date('2026-06-30T23:59:59-03:00');
+```
+
+**Pra mudar a data limite:** edite `EXPIRATION_DATE` em `breakage-10.html` e regenere as outras 4 variantes com o comando sed acima.
+
+Lógica de exibição:
+- `diffDays <= 0` → "Seu presente expirou."
+- `diffDays === 1` → "Seu presente expira **amanhã**, aproveite!"
+- `diffDays > 1` → "Seu presente expira em **N dias**, aproveite!"
+
 ---
 
 ## Tipografia

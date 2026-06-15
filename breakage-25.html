@@ -581,7 +581,7 @@
 
     <!-- ============ CTA FIXO ============ -->
     <div class="cta-section">
-      <p class="expiration-text">Seu presente expira após <strong>4 dias</strong>, aproveite!</p>
+      <p class="expiration-text" id="expirationText">Seu presente expira em breve, aproveite!</p>
       <button class="primary-button" id="ctaPrimary" type="button">Quero meu presente</button>
     </div>
 
@@ -605,6 +605,28 @@
     // ao gerar uma nova variante (ex.: 5, 10, 15, 20, 25).
     const INCENTIVE_VALUE = 25;
     const AMPLITUDE_API_KEY = '70c4aa9143716ab2bb6a43ebbaf81bf3';
+
+    // ==================== DATA LIMITE DO SALDO ====================
+    // O saldo expira em 30/06/2026 às 23:59:59 horário de Brasília.
+    // Mude este valor se a data limite mudar.
+    const EXPIRATION_DATE = new Date('2026-06-30T23:59:59-03:00');
+
+    (function renderExpiration() {
+      const el = document.getElementById('expirationText');
+      if (!el) return;
+
+      const now = new Date();
+      const diffMs = EXPIRATION_DATE - now;
+      const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+
+      if (diffDays <= 0) {
+        el.innerHTML = 'Seu presente expirou.';
+      } else if (diffDays === 1) {
+        el.innerHTML = 'Seu presente expira <strong>amanhã</strong>, aproveite!';
+      } else {
+        el.innerHTML = 'Seu presente expira em <strong>' + diffDays + ' dias</strong>, aproveite!';
+      }
+    })();
 
     // ==================== URL / PLATAFORMA ====================
     const URL_PARAMS = new URLSearchParams(window.location.search);
